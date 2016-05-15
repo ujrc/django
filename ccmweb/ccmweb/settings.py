@@ -10,20 +10,47 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
+# import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+import os
+from django.core.exceptions import ImproperlyConfigured
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Handling Key Import Errors
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg="Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+# Get ENV VARIABLES key
+ENV_ROLE =get_env_variable('ENV_ROLE')
+
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*u()=%-o#2&h56+(&70zypf)@ofg%kl(5+++y@+8s5zt^qb322'
+# SECRET_KEY = '*u()=%-o#2&h56+(&70zypf)@ofg%kl(5+++y@+8s5zt^qb322'
 
+with open('ccmweb/key.txt') as f:
+    SECRET_KEY = f.read().strip()
+    #SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG=False
+TEMPLATE_DEBUG=DEBUG
+CCMWEB_DB_PASS=False
+if ENV_ROLE =='development':
+    DEBUG=True
+    TEMPLATE_DEBUG=DEBUG
+    CCMWEB_DB_PASS=get_env_variable('CCMWEB_DB_PASS')
 
 ALLOWED_HOSTS = []
 
@@ -79,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ccmweb_db',
         'USER':'postgres',
-        'PASSWORD':'postgres',
+        'PASSWORD':CCMWEB_DB_PASS,
         'HOST':'localhost',
         'PORT':'5432',
     }
