@@ -45,11 +45,9 @@ with open('ccmweb/key.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG=False
-TEMPLATE_DEBUG=DEBUG
 CCMWEB_DB_PASS=False
 if ENV_ROLE =='development':
     DEBUG=True
-    TEMPLATE_DEBUG=DEBUG
     CCMWEB_DB_PASS=get_env_variable('CCMWEB_DB_PASS')
 
 ALLOWED_HOSTS = ['*']
@@ -65,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'marketing',
+    'subscribers',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -92,6 +91,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG,
         },
     },
 ]

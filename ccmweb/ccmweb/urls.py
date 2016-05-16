@@ -18,11 +18,11 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 from django.contrib import admin
 from marketing.views import HomePage
-
+from subscribers import views as subscribers_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',HomePage.as_view(),name='home'),
-    url(r'^signup/$','subscribers.views.subscriber_new',name='sub_new'),
+    url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
 
 ]
 
