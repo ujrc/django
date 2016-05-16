@@ -7,7 +7,7 @@ class AddressMixin(forms.ModelForm):
 	class Meta:
 		model=Subscriber
 		fields=['address_one','address_two','city','state']
-		widget={
+		widgets={
 		'address_one':forms.TextInput(attrs={'class':'form-control',}),
 		'address_two':forms.TextInput(attrs={'class':'form-control',}),
 		'city':forms.TextInput(attrs={'class':'form-control',}),
@@ -20,6 +20,7 @@ class SubscriberForm(AddressMixin, UserCreationForm):
 		attrs={'class':'form-control'}))
 	last_name =forms.CharField(required=True,widget=forms.TextInput(
 		attrs={'class':'form-control'}))
+
 	email=forms.EmailField(required=True,
 		widget=forms.TextInput(
 			attrs={'class':'form-control'}))
