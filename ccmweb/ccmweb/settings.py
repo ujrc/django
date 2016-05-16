@@ -52,7 +52,7 @@ if ENV_ROLE =='development':
     TEMPLATE_DEBUG=DEBUG
     CCMWEB_DB_PASS=get_env_variable('CCMWEB_DB_PASS')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -156,3 +156,8 @@ STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'static_cdn')
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR),'media_cdn')
+
+# Parse database configuration from $DATABASE_URL
+if ENV_ROLE =='production':
+    import dj_database_url
+    DATABASE['default'] =dj_database_url.config()
