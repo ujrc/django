@@ -41,6 +41,19 @@ ENV_ROLE =get_env_variable('ENV_ROLE')
 
 with open('ccmweb/key.txt') as f:
     SECRET_KEY = f.read().strip()
+
+# Stripe Key Settings
+new_key=[]
+with open('ccmweb/stripe_key.txt') as file:
+    keys= file.read().strip().split('\n')
+    for key in keys:
+        new_key.append(key)
+STRIPE_SECRET_KEY=new_key[0]
+STRIPE_PUBLISHABLE_KEY=new_key[1]
+
+# Current Subscription Price
+SUBSCRIPTION_PRICE = 1500
+
     #SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
