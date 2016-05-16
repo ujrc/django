@@ -22,6 +22,7 @@ from marketing.views import HomePage
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',HomePage.as_view(),name='home'),
+    url(r'^signup/$','ccmweb.subscribers.views.subscriber_new',name='sub_new'),
 
 ]
 
