@@ -2,14 +2,28 @@
 {% block title%}Signup{%endblock%}
 {% block content%}
 
-<div id="content-container" class=" container p-none">
+<div id="content-container" class="container">
+<div class="jumbotron">
+<div class="row">
+<h3>Signup for a $20 Monthly Subscription</h3>
+<h5 class="sn-sh"> <strong>CREATE A USERNAME AND PASSWORD</strong></h5>
+
+<div class="col-sm-8 col-sm-offset-2">
 	<div class="side-p"> 
 	<form id="user-reg-form" action="." method='post'>
 	{% csrf_token %}
-		<h3>Signup for a $15 Monthly Subscription</h3>
-         <h5 class="sn-sh">CREATE A USERNAME AND PASSWORD</h5>
-         form.as_p
+		<fieldset>
+         	<label for="">{{form.username.label}}:</label> {{form.username}} {{form.username.errors}}<br>
+         	<label for="">{{form.email.label}}:</label>{{form.email}}{{form.email.errors}}
+         	<label for="">Password:</label>{{form.password1}} {{form.password1.errors}} <br>
+         	<label for="">Confirm Password:</label>{{form.password2}} {{form.password2.errors}} <br>
+			
+			<input class="btn btn-primary" type="submit" value="Submit">
+         </fieldset>
 	</form>
+	</div>
+	</div>
+	</div>
 	</div>
 </div>
 {% endblock content %}
