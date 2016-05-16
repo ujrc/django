@@ -53,7 +53,7 @@
 			<ul class="nav navbar-nav navbar-right ">
 				{% if user.is_authenticated %}
 				<li><a href="">Logout</a></li>
-				<li><a class="p-r-none" href="">Sign Up</a></li>
+				<li><a class="p-r-none" href="{% url 'sub_new'%}">Sign Up</a></li>
 				{% endif%}
 			</ul>
 		</div>
