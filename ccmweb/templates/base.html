@@ -23,7 +23,7 @@
 
 	{% block head_css%} 
 		{% block head_css_site%} 
-		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.css" media="screen">
+		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css" media="screen">
 		<link rel="stylesheet" href="{{STATIC_URL}}css/app.css" media="screen">
 		{% endblock head_css_site%}
 		{% block head_css_section %}{% endblock head_css_section %}
@@ -51,7 +51,7 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right ">
-				{% is user.isauthenticated %}
+				{% if user.is_authenticated %}
 				<li><a href="">Logout</a></li>
 				<li><a class="p-r-none" href="">Sign Up</a></li>
 				{% endif%}

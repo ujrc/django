@@ -21,10 +21,11 @@ from marketing.views import HomePage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^contact-us/(?P<lang>[w-]+)/$',HomePage.as_view(),name='home'),
+    url(r'^$',HomePage.as_view(),name='home'),
+
 ]
 
 if settings.DEBUG:
-	urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-	urlpatterns += =static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+	urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
