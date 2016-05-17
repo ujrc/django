@@ -22,6 +22,21 @@
                 {% endfor %}
             </ul>
             {# Pagination Section #}
+            {% if is_paginated %}
+            <div id="all-paginate">
+            	<ul class="strip-list al-pgnt-list">
+            	{% if page_obj.has_previous%}
+            	<li class="pull-left">
+            		<a href="{% url 'accounts_list'%}?Page={{page_obj.previous_page_number}} 
+            		{% if request.GET.account%}&account={{request.GET.accoumt}} {%endif%}">Prev</a>
+            	</li>
+            		{% endif %}
+            		{% if page_obj.has_next %}
+            		<li class="pull-right"><a href="{% url 'accounts_list'%}?Page={{page_obj.next_page_number}} {% if request.GET.account %}&account{{request.GET.account}} {% endif %}"></a></li>
+            		{% endif %}
+            	</ul>
+            	}
+            </div>
         </div>
     </div>
 
