@@ -1,4 +1,4 @@
-<form id="gi-form" action="" method="post">
+<form id="gi-form" action="{% if account.uuid %} {{ account.get_update_url }} {% else %}{% url 'account_new' %}{% endif %}" method="post">
 	{% csrf_token %}
 	<div id="gi-h=w">
 		<h3 class="gi-mh">{{form.name}}</h3>
