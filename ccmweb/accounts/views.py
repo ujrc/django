@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 
 # Create your views here.
-from django.http import HttpResponseForbidden
-from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseForbidden,HttpResponseRedirect 
 from django.utils.decorators import method_decorator
+from django.views.generic import ListView
 
+from .forms import AccountForm
 from .models import Account
 
 @login_required
@@ -18,6 +20,38 @@ def account_detail(request,uuid):
 	}
 
 	return render(request,'accounts/account_detail.html',variables)
+
+
+
+@login_required
+def account_cru(request,uuid=None):
+	if uuid:
+		account=get_object_or_404(Account,uuid=uuid)
+		if accounts.owner !=request.user:
+			return HttpResponseRedirect()
+	else:
+		account=Account(owner=request.user)
+
+	if request.POST:
+		form=AccountForm(request.POST,instance=account)
+		if form.is_valid():
+			account=form.save(commit=False)
+			account.owner=request.user
+			account.save()
+			redirect_url = reverse(
+				'account_detail',
+				args=(account.uuid))
+			return HttpResponseRedirect(redirect_url)
+
+	else:
+		form=AccountForm(instance=accountcount)
+	variables={
+	'form':form,
+	'account':account,
+	}
+	template='accounts/account_cru.html'
+	return render(request,template,variables)
+
 
 class AccountList(ListView):
 	model =  Account
