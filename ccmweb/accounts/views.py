@@ -28,5 +28,5 @@ class AccountList(ListView):
 
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
-		return super(Account,self).dispatch(*args,**kwargs)
-
+		return super(AccountList,self).dispatch(*args,**kwargs)
+	
