@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
 from marketing.views import HomePage
 from subscribers import views as subscribers_view
 
 from accounts.views import AccountList
+from accounts.urls import account_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,8 +30,8 @@ urlpatterns = [
     url(r'^login/$','django.contrib.auth.views.login',{'template_name':'login.html'}),
     url(r'^logout/$','django.contrib.auth.views.logout',{'next_page':'/login/'}),
     # Account related URLs
-    url(r'^account/list/$',AccountList.as_view(), name='account_list'
-),
+    url(r'^account/list/$',AccountList.as_view(), name='account_list'),
+    url(r'account/(?P<uuid>[\w-]+)/',include(account_urls)),
 
 ]
 

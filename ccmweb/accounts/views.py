@@ -1,11 +1,23 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.http import HttpResponseForbidden
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Account
+
+@login_required
+def account_detail(request,uuid):
+	account=Account.objects.get(uuid=uuid)
+	if account.owner !=request.user:
+		return httpResponseForbidden()
+	variables={
+	'account':account,
+	}
+
+	return render(request,'accounts/account_detail.html',variables)
 
 class AccountList(ListView):
 	model =  Account
