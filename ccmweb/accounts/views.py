@@ -1,3 +1,22 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from .models import Account
+
+class AccountList(ListView):
+	model =  Account
+	template_name ='accounts/accounts_list.html'
+	context_object_name='accounts'
+
+	def get_queryset(self):
+		accounts_list=Account.objects.filter(owner=self.request.user)
+		return accounts_list
+
+	@method_decorator(login_required)
+	def dispatch(self,*args,**kwargs):
+		return super(Account,self).dispatch(*args,**kwargs)
+
