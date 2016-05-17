@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -24,24 +24,32 @@ def account_detail(request,uuid):
 
 
 @login_required
-def account_cru(request):
-	if request.Post:
-		form=AccountForm(request.Post)
+def account_cru(request,uuid=None):
+	if uuid:
+		account=get_object_or_404(Account,uuid=uuid)
+		if accounts.owner !=request.user:
+			return HttpResponseRedirect()
+	else:
+		account=Account(owner=request.user)
+
+	if request.POST:
+		form=AccountForm(request.POST,instance=account)
 		if form.is_valid():
-			account=form.save(commit=Flase)
+			account=form.save(commit=False)
 			account.owner=request.user
 			account.save()
 			redirect_url = reverse(
-				'accounts.views.account_detail',
+				'account_detail',
 				args=(account.uuid))
 			return HttpResponseRedirect(redirect_url)
 
 	else:
-		form=AccountForm()
+		form=AccountForm(instance=accountcount)
 	variables={
 	'form':form,
+	'account':instance
 	}
-	template='account_cru.html'
+	template='accounts/account_cru.html'
 	return render(request,template,variables)
 
 

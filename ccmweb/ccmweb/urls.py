@@ -17,22 +17,24 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.contrib.auth import views as django_view
 from marketing.views import HomePage
 from subscribers import views as subscribers_view
 
 from accounts.views import AccountList
+from accounts import views as accounts_view
 from accounts.urls import account_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',HomePage.as_view(),name='home'),
     url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
-    url(r'^login/$','django.contrib.auth.views.login',{'template_name':'login.html'}),
-    url(r'^logout/$','django.contrib.auth.views.logout',{'next_page':'/login/'}),
+    url(r'^login/$',django_view.login,{'template_name':'login.html'}),
+    url(r'^logout/$',django_view.logout,{'next_page':'/login/'}),
     # Account related URLs
-    url(r'^account/new/$','accounts.views.account_cru',name='account_new'),
+    url(r'^account/new/$',accounts_view.account_cru,name='account_new'),
     url(r'^account/list/$',AccountList.as_view(), name='account_list'),
-    url(r'account/(?P<uuid>[\w-]+)/',include(account_urls)),
+    url(r'^account/(?P<uuid>[\w-]+)/',include(account_urls)),
 
 ]
 
