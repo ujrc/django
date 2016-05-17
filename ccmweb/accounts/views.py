@@ -9,14 +9,24 @@ from .models import Account
 
 class AccountList(ListView):
 	model =  Account
+	paginate_by=12
 	template_name ='accounts/accounts_list.html'
 	context_object_name='accounts'
 
 	def get_queryset(self):
-		accounts_list=Account.objects.filter(owner=self.request.user)
+		try:
+			a=self.request.GET.get('account',)
+		except KeyError:
+			a=None
+		if a:
+			accounts_list=Account.objects.filter(
+				name__icontains=a,
+				owner=self.request.user)
+		else:
+			accounts_list=Account.objects.filter(owner=self.request.user)
 		return accounts_list
 
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
-		return super(Account,self).dispatch(*args,**kwargs)
-
+		return super(AccountList,self).dispatch(*args,**kwargs)
+	
