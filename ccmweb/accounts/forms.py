@@ -28,4 +28,4 @@ class AccountForm(forms.ModelForm):
 			'placeholder':'Phone',
 			'class':'gi-form-addr form-control'}),
 		}
-		
+	
