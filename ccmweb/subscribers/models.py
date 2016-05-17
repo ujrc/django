@@ -24,7 +24,7 @@ class Subscriber(models.Model):
 	def charge(self,request,email,fee):
 		# Set your secret key: remember to change this to your live secret key
 		# in production. See your keys here https://manage.stripe.com/account
-		stripe.api_key=STRIPE_SECRET_KEY
+		stripe.api_key=settings.STRIPE_SECRET_KEY
 
 		# Get the credit card details submitted by the form
 		token = request.POST['stripeToken']

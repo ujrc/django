@@ -26,7 +26,7 @@ class SubscriberForm(AddressMixin, UserCreationForm):
 			attrs={'class':'form-control'}))
 	username=forms.CharField(widget=forms.TextInput(
 		attrs={'class':'form-control'}))
-	password1=forms.CharField(widget=forms.TextInput(
+	password1=forms.CharField(widget=forms.PasswordInput(
 		attrs={'class':'form-control','type':'password'}))
-	password2=forms.CharField(widget=forms.TextInput(
+	password2=forms.CharField(widget=forms.PasswordInput(
 		attrs={'class':'form-control','type':'password'}))
