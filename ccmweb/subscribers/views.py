@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,  login
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.forms.forms import NON_FIELDS_ERRORS
+from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect
 
 from .forms import SubscriberForm
@@ -41,7 +41,13 @@ def subscriber_new(request,template='subscribers/subscriber_new.html'):
 			city=city,state=state,user_sub=user)
 		subscriber.save()
 
-		# Auto login the user
+		# Process payment (via Stripe)
+		fee=settings.SUBSCRIPTION_PRICE
+		try:
+			stripe_customer=subscriber.charge(request,email,fee)
+		except stripe.StripeError as e:
+			form.errors[NON_FIELDS_ERRORS]=form.error_clss([e.args[0]])
+			# Auto login the user
 		auth_u=authenticate(username=username,password=password)
 		if auth_u is not None:
 			if auth_u.is_active:
@@ -54,15 +60,10 @@ def subscriber_new(request,template='subscribers/subscriber_new.html'):
 			return HttpResponseRedirect(reverse('sub_new'))
 	else:
 		form=SubscriberForm()
-	fee=settings.SUBSCRIPTION_PRICE
-	try:
-		stripe_customer=subscriber.charge(request,email,fee)
-	except:
-		stripe.StripeError as e:
-		form.errors[NON_FIELDS_ERRORS]=form.error_clss([e.args[0]])
+	
 	return render(request,template,
-		{'form':form},
-		'STRIPE_PUBLISHABLE_KEY':settings.STRIPE_PUBLISHABLE_KEY)
+		{'form':form,
+		'STRIPE_PUBLISHABLE_KEY':settings.STRIPE_PUBLISHABLE_KEY,})
 
 
 

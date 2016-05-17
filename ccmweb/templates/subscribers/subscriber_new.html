@@ -1,14 +1,18 @@
 {% extends "base.html"%}
+{% load staticfiles %}
 {% block title%}Signup{%endblock%}
 {% block content%}
 
 <div id="content-container" class="container">
+<div class="jumbotron">
 <div class="row">
-<h3>Signup for a $20 Monthly Subscription</h3>
 <div class="side-p"> 
+<h3>Signup for a $20 Monthly Subscription</h3>
+
+
 	<form id="user-reg-form" action="." method='post'>
 	{% csrf_token %}
-	<div class="col-sm-4 col-sm-offset-3">
+	<div class="col-sm-4">
 	<h5 class="sn-sh"> <strong>CREATE A USERNAME AND PASSWORD</strong></h5>
 	
 	<section class="user-info">
@@ -16,9 +20,10 @@
          	<label for="">Password:</label>{{form.password1}} {{form.password1.errors}} <br>
          	<label for="">Confirm Password:</label>{{form.password2}} {{form.password2.errors}} <br>
 			
-			<input class="btn btn-primary" type="submit" value="Submit">
+			
          </section>
-         
+         </div>
+         <div class="col-sm-4">
          <h5 class="sn-sh"><strong>YOUR BILLING ADDRESS</strong></h5>
          	<section>
          	 <p><label for="">{{form.first_name.label}}</label>{{form.first_name}}{{form.first_name.errors}} </p>
@@ -31,13 +36,39 @@
          		
          		<p><label for="">{{form.state.label}}</label>{{form.state}} {{form.state.errors}}</p>
 
-         	</section>
-         	</div>
-         <div>
-         </div>
+         	</section>      	
+        </div>
 	</form>
-	</div>
-	</div>
+	{# Credit Card Section #}
 	
+	<h5 class="sn-sh"> CREDIT CARD</h5>
+	<form id="payment-form" action="." method="post">
+	{%  csrf_token %}
+	<div class="col-sm-4 card">
+		<p><label>Card Number</label> <input type="text" size="32" data-stripe="number" class="col-md-10 form-control"/> </p>
+      	<p><label>CVC</label> <input type="text" size="4" data-stripe="cvc" class="col-md-2 form-control"/><p>
+        <p><label>Exp Month</label> <input type="text" size="2" data-stripe="exp-month" class="col-md-1 form-control"/><p>
+        <p><label>Exp Year</label> <input type="text" size="4" data-stripe="exp-year" class="col-md-1 form-control"/></p>
+          
+    <br>
+     <span class="payment-errors label label-danger"></span>
+    <div class="">
+        {% for err in form.non_field_errors %}
+            <p class="label label-danger">{{ err }}</p>
+        {% endfor %}
+    </div> <br>
+    <input id="payment-submit" type="submit" value="Signup"
+           class="btn btn-primary"/>
+     </div>
+	</form>
+	
+	</div>
+	</div>
+	</div>
 </div>
 {% endblock content %}
+
+{% block footer_javascript_page %}
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="{%static 'payment.js'%}"></script>
+{% endblock footer_javascript_page %}

@@ -54,7 +54,7 @@ STRIPE_PUBLISHABLE_KEY=new_key[1]
 # Current Subscription Price
 SUBSCRIPTION_PRICE = 1500
 
-    #SECRET_KEY = get_env_variable('SECRET_KEY')
+#SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG=False
