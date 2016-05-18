@@ -1,0 +1,11 @@
+{% extends 'base.html'}
+{% block title %}Contact Detail{% endblock title %}
+
+{% block content %}
+<div id="content-container" class="container p-none">
+	<h4 class="ad-mh">Contact Details</h4>
+	<div id="cd-div" class="contact-items">
+		{% include 'contacts/contact_item_view.html' %}
+	</div>
+</div>
+{% endblock content %}
