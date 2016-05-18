@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'marketing',
     'subscribers',
     'accounts',
+    'contacts',
 ]
 
 MIDDLEWARE_CLASSES = [
