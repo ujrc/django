@@ -27,7 +27,7 @@ def account_detail(request,uuid):
 def account_cru(request,uuid=None):
 	if uuid:
 		account=get_object_or_404(Account,uuid=uuid)
-		if accounts.owner !=request.user:
+		if account.owner !=request.user:
 			return HttpResponseRedirect()
 	else:
 		account=Account(owner=request.user)
@@ -39,12 +39,12 @@ def account_cru(request,uuid=None):
 			account.owner=request.user
 			account.save()
 			redirect_url = reverse(
-				'account_detail',
-				args=(account.uuid))
+				'accounts.views.account_detail',
+				args=(account.uuid,))
 			return HttpResponseRedirect(redirect_url)
 
 	else:
-		form=AccountForm(instance=accountcount)
+		form=AccountForm(instance=account)
 	variables={
 	'form':form,
 	'account':account,
