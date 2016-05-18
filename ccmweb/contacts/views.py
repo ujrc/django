@@ -18,43 +18,95 @@ def contact_detail(request,uuid):
 	return render(request,
 		'contacts/contact_detail.html',{'contact':contact})
 
+# @login_required
+# def contact_cru(request,uuid=None,account=None):
+
+# 	if uuid:
+# 		contact=get_object_or_404(Contact,uuid=uuid)
+# 		if contact.owner != request.user:
+# 			return HttpResponseForbidden()
+# 	else:
+# 		contact=Contact(owner=request.user)
+		
+# 	if request.method=='POST':
+# 		form = ContactForm(request.POST,instance=contact)
+# 		if form.is_valid():
+# 			# make sure the user owns the account
+# 			account=form.cleaned_data['account']
+# 			if account.owner!=request.user:
+# 				return HttpResponseForbidden()
+# 			# # save the data
+# 			form.save()
+
+# 			# contact=form.save(commit=False)
+# 			# contact.owner=request.user
+# 			# contact.save()
+# 			# return the user to the account detail view
+# 			reverse_url= reverse('accounts.views.account_detail',args=(account.uuid,))
+# 			return HttpResponseRedirect(reverse_url)
+# 		# else:
+# 		# 	# if the form isn't valid, still fetch the account so it can be passed to the template
+# 		# 	account=form.cleaned_data['account']
+# 	else:
+# 		form=ContactForm(instance=contact)
+# 	if request.GET.get('account',''):
+# 		account=Account.objects.get(id=request.GET.get('account',''))
+# 	variables={
+# 	'form':form,
+# 	'contact':contact,
+# 	'account':account,
+# 	}
+# 	template_name='contacts/contact_cru.html'
+# 	return render(request,template_name,variables)
+
 @login_required
-def contact_cru(request,uuid=None,account=None):
+def contact_cru(request, uuid=None, account=None):
 
 	if uuid:
-		contact=get_object_or_404(Contact,uuid=uuid)
+		contact = get_object_or_404(Contact, uuid=uuid)
 		if contact.owner != request.user:
 			return HttpResponseForbidden()
 	else:
-		contact=Contact(owner=request.user)
-		
-	if request.method=='POST':
-		form = ContactForm(request.POST,instance=contact)
+		contact = Contact(owner=request.user)
+
+	if request.POST:
+		form = ContactForm(request.POST, instance=contact)
 		if form.is_valid():
 			# make sure the user owns the account
-			account=form.cleaned_data['account']
-			if account.owner!=request.user:
+			account = form.cleaned_data['account']
+			if account.owner != request.user:
 				return HttpResponseForbidden()
-			# # save the data
-			form.save()
-
-			# contact=form.save(commit=False)
-			# contact.owner=request.user
-			# contact.save()
+			# save the data
+			contact = form.save(commit=False)
+			contact.owner = request.user
+			contact.save()
 			# return the user to the account detail view
-			reverse_url= reverse('accounts.views.account_detail',args=(account.uuid,))
-			return HttpResponseRedirect(reverse_url)
-		# else:
-		# 	# if the form isn't valid, still fetch the account so it can be passed to the template
-		# 	account=form.cleaned_data['account']
+			if request.is_ajax():
+				return render(request,
+							  'contacts/contact_item_view.html',
+							  {'account':account, 'contact':contact}
+				)
+			else:
+				reverse_url = reverse(
+					'crmapp.accounts.views.account_detail',
+					args=(account.uuid,)
+				)
+				return HttpResponseRedirect(reverse_url)
 	else:
-		form=ContactForm(instance=contact)
-	if request.GET.get('account',''):
-		account=Account.objects.get(id=request.GET.get('account',''))
-	variables={
-	'form':form,
-	'contact':contact,
-	'account':account,
+		form = ContactForm(instance=contact)
+
+	if request.GET.get('account', ''):
+		account = Account.objects.get(id=request.GET.get('account', ''))
+
+	variables = {
+		'form': form,
+		'contact': contact,
+		'account': account
 	}
-	template_name='contacts/contact_cru.html'
-	return render(request,template_name,variables)
+
+	if request.is_ajax():
+		template = 'contacts/contact_item_form.html'
+	else:
+		template = 'contacts/contact_cru.html'
+
+	return render(request, template, variables)
