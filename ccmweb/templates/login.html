@@ -1,29 +1,24 @@
 {% extends "base.html"%}
-
 {% block title %}Login{% endblock %}
 {% block content %}
-
-<div id="content-container" class="conatiner p-none">
-	<div class="lgn-container col-lg-8">
-	<form id="login-form" method="post" action="{% url 'django.contrib.auth.views.login'%}">
-		{% csrf_token %}
-
-		 <div class="login-content">
-           <label for="id_username">Username</label><input id="id_username" name="username"  ype="text" class="form-control">
-            <label for="id_password">Password</label>
-            <input id="id_password" name="password" type="password" class="form-control">
-                {% if form.errors %}
-                    <p class=" label label-danger">
-                        Your username and password didn't match. 
-                        Please try again.
-                    </p>
-                {% endif %}
-
-                <input type="submit" value="Login" 
-                       class="btn btn-primary pull-right" />
-                <input type="hidden" name="next" value="{{ next }}" />
-	</form>
-	</div>
-</div>
-
-{% endblock content %}
+    <div id="content-container" class="conatiner p-none">
+        <div class="lgn-container col-lg-8">
+            <form id="login-form" method="post" action="{% url 'django.contrib.auth.views.login'%}">
+                {% csrf_token %}
+                <div class="login-content">
+                    <label for="id_username">Username</label><input id="id_username" name="username"  ype="text" class="form-control">
+                    <label for="id_password">Password</label>
+                    <input id="id_password" name="password" type="password" class="form-control">
+                    {% if form.errors %}
+                        <p class=" label label-danger">
+                            Your username and password didn't match.
+                            Please try again.
+                        </p>
+                    {% endif %}
+                    <input type="submit" value="Login"
+                    class="btn btn-primary pull-right" />
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+            </div>
+        </div>
+    {% endblock content %}

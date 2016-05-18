@@ -31,7 +31,7 @@ def account_cru(request,uuid=None):
 	if uuid:
 		account=get_object_or_404(Account,uuid=uuid)
 		if account.owner !=request.user:
-			return HttpResponseRedirect()
+			return HttpResponseForbidden()
 	else:
 		account=Account(owner=request.user)
 
