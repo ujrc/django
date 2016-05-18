@@ -9,14 +9,17 @@ from django.views.generic import ListView
 
 from .forms import AccountForm
 from .models import Account
+from contacts.models import Contact
 
 @login_required
 def account_detail(request,uuid):
 	account=Account.objects.get(uuid=uuid)
 	if account.owner !=request.user:
 		return httpResponseForbidden()
+	contacts=Contact.objects.filter(account=account)
 	variables={
 	'account':account,
+	'contacts': contacts,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)

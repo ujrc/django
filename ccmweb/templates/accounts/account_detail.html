@@ -9,6 +9,23 @@
 </div>
 </div>
 {# List Contacts #}
+<div id="cd-container" class="ad-container">
+<div class="ad-header">
+	<h4 class="ad-mh m-none">Contacts</h4>
+</div>
+ <div id="cd-body" class="row">
+ <div id="cd-div" class="contact contact-hover">
+ <p>
+ 	{% for contact in contacts %}
+ 	
+    {% include 'contacts/contact_item_view.html' %}
+    {% endfor %}
+ </p>	
+ </div>
+ {# New Contact Link #}
+ <a id="new-contact" class="btn btn-link" href="">New Contact</a>
+ </div>	
+</div>
 {# List Communications #}	
 </div>
 {%endblock content%}
