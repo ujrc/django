@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'contacts',
 ]
 
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

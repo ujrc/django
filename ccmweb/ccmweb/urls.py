@@ -24,8 +24,9 @@ from subscribers import views as subscribers_view
 from accounts.views import AccountList
 from accounts import views as accounts_view
 from accounts.urls import account_urls
-from contacts.urls import contact_urls
+from contacts.views import ContactDelete
 from contacts import views as contacts_view
+from contacts.urls import contact_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -45,7 +46,8 @@ urlpatterns = [
 
     url(r'^contact/new/$',contacts_view.contact_cru, name='contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
-
+    url(r'^contact/(?P<uuid>[\w-]+)/delete/$',ContactDelete.as_view(),
+     name='contact_delete'),
 ]
 
 if settings.DEBUG:
