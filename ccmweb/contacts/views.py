@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect ,HttpResponseForbidden
 
-from accounts import views
+from accounts.views import account_detail
 from accounts.models import Account
 from .forms import ContactForm
 from .models import Contact
@@ -28,25 +28,25 @@ def contact_cru(request,uuid=None,account=None):
 	else:
 		contact=Contact(owner=request.user)
 		
-	if request.POST:
+	if request.method=='POST':
 		form = ContactForm(request.POST,instance=contact)
 		if form.is_valid():
 			# make sure the user owns the account
 			account=form.cleaned_data['account']
 			if account.owner!=request.user:
 				return HttpResponseForbidden()
+			# # save the data
+			form.save()
 
-			# save the data
-			contact=form.save(commit=False)
-			contact.owner=request.user
-			contact.save()
+			# contact=form.save(commit=False)
+			# contact.owner=request.user
+			# contact.save()
 			# return the user to the account detail view
-			reverse_url= reverse(
-				views.account_detail,args=(account.uuid,))
+			reverse_url= reverse('accounts.views.account_detail',args=(account.uuid,))
 			return HttpResponseRedirect(reverse_url)
-		else:
-			# if the form isn't valid, still fetch the account so it can be passed to the template
-			account=form.cleaned_data['account']
+		# else:
+		# 	# if the form isn't valid, still fetch the account so it can be passed to the template
+		# 	account=form.cleaned_data['account']
 	else:
 		form=ContactForm(instance=contact)
 	if request.GET.get('account',''):
@@ -54,12 +54,7 @@ def contact_cru(request,uuid=None,account=None):
 	variables={
 	'form':form,
 	'contact':contact,
-	'account':account
+	'account':account,
 	}
 	template_name='contacts/contact_cru.html'
 	return render(request,template_name,variables)
-
-
-
-
-
