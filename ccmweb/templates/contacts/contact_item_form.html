@@ -1,0 +1,23 @@
+<form id="contact-form"action="" method="post">
+	{% csrf_token %}
+	<div class="contact-div">
+		<div>
+			<p class="p-l-none"> {{form.first_name}}</p>
+			<p> {form.last_name}} </p>
+			<p> {form.role}} </p>
+			<p> {form.phone}}</p>
+			<p class="p-l-none"> {form.email}} </p>
+		</div>
+		{% if form.errors %}
+			<div>
+				<p>{{form.first_name.errors}}</p>
+				<p>{{form.last_name.errors}}</p>
+				<p>{{form.role.errors}}</p>
+				<p>{{form.phone.errors}}</p>
+				<p>{{form.email.errors}}</p>
+			</div>
+		{% endif %}
+	</div>
+	<input id="id_account" name="account" type="hidden" value"{% if request.GET.account %} {{request.GET.account}} {% else %} {{account.id}} {% endif %}">
+	<input id="contact-submit" class="btn btn-primary m-r-none" type="submit" value="SAVE">
+</form>

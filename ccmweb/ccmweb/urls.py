@@ -30,19 +30,20 @@ from contacts import views as contacts_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',HomePage.as_view(),name='home'),
-    
+
     # Subscribers URL
     url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
     url(r'^login/$',django_view.login,{'template_name':'login.html'}),
     url(r'^logout/$',django_view.logout,{'next_page':'/login/'}),
     # Account related URLs
-    # Accounts URL
+    
     url(r'^account/new/$',accounts_view.account_cru,name='account_new'),
     url(r'^account/list/$',AccountList.as_view(), name='account_list'),
     url(r'^account/(?P<uuid>[\w-]+)/',include(account_urls)),
 
-    # Contacts URL
-    url(r'^contact/new/$',contacts_view.contact_cru,name='contact_new');
+    # Contact related  URLs
+
+    url(r'^contact/new/$',contacts_view.contact_cru, name='contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
 
 ]
