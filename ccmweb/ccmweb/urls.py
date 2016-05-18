@@ -24,6 +24,7 @@ from subscribers import views as subscribers_view
 from accounts.views import AccountList
 from accounts import views as accounts_view
 from accounts.urls import account_urls
+from contacts.urls import contact_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,7 +36,7 @@ urlpatterns = [
     url(r'^account/new/$',accounts_view.account_cru,name='account_new'),
     url(r'^account/list/$',AccountList.as_view(), name='account_list'),
     url(r'^account/(?P<uuid>[\w-]+)/',include(account_urls)),
-
+    url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
 ]
 
 if settings.DEBUG:
