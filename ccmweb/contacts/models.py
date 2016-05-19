@@ -30,11 +30,8 @@ class Contact(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-<<<<<<< HEAD
 		return 'contact_detail',[self.uuid]
-=======
-		return 'contact_detail', [self.uuid]
->>>>>>> contacts
+
 
 	@models.permalink
 	def get_update_url(self):

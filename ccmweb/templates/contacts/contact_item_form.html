@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-<form id="contact-form"action="{% if contact.uuid %}
-      {% url 'contact_update' contact.uuid %}{% else %}{% url 'contact_new' %}{% endif %}" method="post">
-=======
+
 <form id="contact-form" action="{% if contact.uuid %}{% url 'contact_update' contact.uuid%}{% else %}
 {% url 'contact_new'%}{% endif%}" method="post">
->>>>>>> contacts
+
 	{% csrf_token %}
 	<div class="contact-div">
 		<div>
