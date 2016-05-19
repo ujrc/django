@@ -7,9 +7,10 @@ from django.http import HttpResponseForbidden,HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
+from communications.models import Communication
+from contacts.models import Contact
 from .forms import AccountForm
 from .models import Account
-from contacts.models import Contact
 
 @login_required
 def account_detail(request,uuid):
@@ -17,9 +18,11 @@ def account_detail(request,uuid):
 	if account.owner !=request.user:
 		return httpResponseForbidden()
 	contacts=Contact.objects.filter(account=account)
+	communications=Communication.objects.filter(account=account).order_by('-Created_on')
 	variables={
 	'account':account,
 	'contacts': contacts,
+	'communications': communications,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)
