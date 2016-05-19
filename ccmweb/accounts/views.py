@@ -19,11 +19,15 @@ def account_detail(request,uuid):
 	account=Account.objects.get(uuid=uuid)
 	if account.owner !=request.user:
 		return httpResponseForbidden()
+<<<<<<< HEAD
 	contacts=Contact.objects.filter(account=account)
 	communications=Communication.objects.filter(account=account).order_by('-Created_on')
 	
 	form=CommunicationForm()
 
+=======
+	contacts = Contact.objects.filter(account=account)
+>>>>>>> contacts
 	variables={
 	'account':account,
 	'contacts': contacts,
