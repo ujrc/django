@@ -1,13 +1,13 @@
-<form id="contact-form"action="{% if contact.uuid %}{% url 'contact_update' contact.uuid%}{% else %}
+<form id="contact-form" action="{% if contact.uuid %}{% url 'contact_update' contact.uuid%}{% else %}
 {% url 'contact_new'%}{% endif%}" method="post">
 	{% csrf_token %}
 	<div class="contact-div">
 		<div>
 			<p class="p-l-none"> {{form.first_name}}</p>
-			<p> {form.last_name}} </p>
-			<p> {form.role}} </p>
-			<p> {form.phone}}</p>
-			<p class="p-l-none"> {form.email}} </p>
+			<p> {{form.last_name}} </p>
+			<p> {{form.role}} </p>
+			<p> {{form.phone}}</p>
+			<p class="p-l-none"> {{form.email}} </p>
 		</div>
 		{% if form.errors %}
 			<div>

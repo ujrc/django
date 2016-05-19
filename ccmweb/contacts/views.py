@@ -27,28 +27,31 @@ def contact_cru(request,uuid=None,account=None):
 			return HttpResponseForbidden()
 	else:
 		contact=Contact(owner=request.user)
+
 		
 	if request.POST:
 		form = ContactForm(request.POST,instance=contact)
 		if form.is_valid():
 			# make sure the user owns the account
-			account=form.cleaned_data['account']
+			account = form.cleaned_data['account']
 			if account.owner!=request.user:
 				return HttpResponseForbidden()
 
 			# save the data
-			contact=form.save(commit=False)
-			contact.owner=request.user
-			contact.save()
+			# contact=form.save(commit=False)
+			# contact.owner=request.user
+			# contact.save()
+			form.save()
 			# return the user to the account detail view
 			reverse_url= reverse(
 				views.account_detail,args=(account.uuid,))
 			return HttpResponseRedirect(reverse_url)
 		else:
 			# if the form isn't valid, still fetch the account so it can be passed to the template
-			account=form.cleaned_data['account']
+			account = form.cleaned_data['account']
 	else:
 		form=ContactForm(instance=contact)
+		
 	if request.GET.get('account',''):
 		account=Account.objects.get(id=request.GET.get('account',''))
 	variables={
@@ -58,8 +61,3 @@ def contact_cru(request,uuid=None,account=None):
 	}
 	template_name='contacts/contact_cru.html'
 	return render(request,template_name,variables)
-
-
-
-
-

@@ -13,6 +13,7 @@
 		</div>
 		<div id="cd-body" class="row">
 			<div id="cd-div" class="contact contact-hover">
+				<p></p>
 				<p>
 					{% for contact in contacts %}
 						
@@ -21,7 +22,7 @@
 				</p>
 			</div>
 			{# New Contact Link #}
-			<a id="new-contact" class="btn btn-link" href="{% url 'contact_new' %}?account={{ account.id }}">New Contact</a>
+			<a id="new-contact" class="btn btn-link" href="{% url 'contact_new'%}?account={{ account.id }}">New Contact</a>
 		</div>
 	</div>
 	{# List Communications #}
