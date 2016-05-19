@@ -23,6 +23,7 @@ from subscribers import views as subscribers_view
 
 from accounts.views import AccountList
 from accounts import views as accounts_view
+from communications.urls import account_urls
 from accounts.urls import account_urls
 from contacts.views import ContactDelete
 from contacts import views as contacts_view
