@@ -25,6 +25,9 @@ from accounts.views import AccountList
 from accounts import views as accounts_view
 from communications.urls import account_urls
 from accounts.urls import account_urls
+from communications.views import CommDelete
+from communications.urls import comm_urls
+from communications import views as comm_view
 from contacts.views import ContactDelete
 from contacts import views as contacts_view
 from contacts.urls import contact_urls
@@ -47,12 +50,21 @@ urlpatterns = [
 
     url(r'^contact/new/$',contacts_view.contact_cru, name='contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
-    url(r'^contact/(?P<uuid>[\w-]+)/delete/$',ContactDelete.as_view(),
+    url(r'^contact/(?P<pk>[\w-]+)/delete/$',ContactDelete.as_view(),
      name='contact_delete'),
 
+<<<<<<< HEAD
 
 # Communication related URLs
 url(r'^comm/(?P<uuid>[\w-]+)/', include(comm_urls)),
+=======
+    # Communication related URLs
+    url(r'^comm/new/$',comm_view.comm_cru, name='comm_new'),
+    url(r'^comm/(?P<uuid>[\w-]+)/',include(comm_urls)),
+    url(r'^comm/(?P<pk>[\w-]+)/delete/$', CommDelete.as_view(),
+     name='comm_delete'),
+
+>>>>>>> master
 ]
 
 if settings.DEBUG:

@@ -1,13 +1,23 @@
+<div>
 <p class="ci-td-p-l">{{contact.full_name}} </p>
 <p > {{contact.role}} </p>
 <p > {{contact.email}} </p>
 <p> {{contact.phone}}</p>
 <p> {{form.phone}} </p>
 <p class="con-cntrl">
+{# Contact Edit Link #}
+	<a class="pen edit-contact" href="{{ contact.get_absolute_url }}?account={{ account.id }}">Add new contact</a>
+</p>
 	{# Contact Edit Link #}
 	<a class="pen edit-contact" href="{{ contact.get_update_url }}?account={{ account.id }}">Edit</a>
 </p>
 <p class="ci-td-p-r">
 	{# Contact Delete Link #}
+<<<<<<< HEAD
 	<a class="cancel" href="{{ contact.get_delete_url }}?account={{ account.id }}">X</a>
 </p>
+=======
+	<a class="cancel" href=""></a>
+</p>
+</div>
+>>>>>>> contacts

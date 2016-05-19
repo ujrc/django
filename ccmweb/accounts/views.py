@@ -7,19 +7,32 @@ from django.http import HttpResponseForbidden,HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
+
+from communications.forms import CommunicationForm
+from communications.models import Communication
+from contacts.models import Contact
 from .forms import AccountForm
 from .models import Account
-from contacts.models import Contact
 
 @login_required
 def account_detail(request,uuid):
 	account=Account.objects.get(uuid=uuid)
 	if account.owner !=request.user:
 		return httpResponseForbidden()
+<<<<<<< HEAD
 	contacts=Contact.objects.filter(account=account)
+	communications=Communication.objects.filter(account=account).order_by('-Created_on')
+	
+	form=CommunicationForm()
+
+=======
+	contacts = Contact.objects.filter(account=account)
+>>>>>>> contacts
 	variables={
 	'account':account,
 	'contacts': contacts,
+	'communications': communications,
+	'form':form,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)
@@ -42,7 +55,7 @@ def account_cru(request,uuid=None):
 			account.owner=request.user
 			account.save()
 			redirect_url = reverse(
-				'accounts.views.account_detail',
+				account_detail,
 				args=(account.uuid,))
 			return HttpResponseRedirect(redirect_url)
 
