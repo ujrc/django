@@ -1,11 +1,12 @@
 {% extends "base.html"%}
 {%block content%}
+
 <div id="content-container" class="container p-none">
-	<div>
-		<div id="gi-container" class="ad-container">
-			{% include 'accounts/account_item_view.html' %}
-		</div>
-	</div>
+	<div id="ad-container">
+        <div id="gi-container" class="ad-container">
+            {% include 'accounts/account_item_view.html' %}
+        </div>
+     </div>
 	{# List Contacts #}
 	<div id="cd-container" class="ad-container">
 		<div class="ad-headers">

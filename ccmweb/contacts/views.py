@@ -90,7 +90,7 @@ def contact_cru(request, uuid=None, account=None):
 				)
 			else:
 				reverse_url = reverse(
-					'crmapp.accounts.views.account_detail',
+					'accounts.views.account_detail',
 					args=(account.uuid,)
 				)
 				return HttpResponseRedirect(reverse_url)
@@ -118,7 +118,7 @@ class ContactMixin(object):
 	model=Contact
 
 	def get_context_data(self,**kwargs):
-		kwargs.update({'object_name'"'Contact"})
+		kwargs.update({'object_name':'Contact'})
 		return kwargs
 
 	@method_decorator
@@ -131,7 +131,7 @@ class ContactDelete(ContactMixin,DeleteView):
 
 	def get_object(self,queryset=None):
 		obj=super(ContactDelete,self).get_object()
-		if not object.owner ==self.request.user:
+		if not obj.owner ==self.request.user:
 			raise Http404
 		account =Account.objects.get(id=obj.account.id)
 		self.account=account 

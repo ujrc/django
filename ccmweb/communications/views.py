@@ -93,7 +93,7 @@ class CommDelete(CommMixin,DeleteView):
 
 	def get_success_url(self):
 		return reverse('accounts.views.account_detail',
-			args=(self.account.uuid,))
+			args=(self.account.uuid))
 
 
 
