@@ -25,6 +25,7 @@ from accounts.views import AccountList
 from accounts import views as accounts_view
 from accounts.urls import account_urls
 from communications.urls import comm_urls
+from communications import views as comm_view
 from contacts.views import ContactDelete
 from contacts import views as contacts_view
 from contacts.urls import contact_urls
@@ -51,6 +52,7 @@ urlpatterns = [
      name='contact_delete'),
 
     # Communication related URLs
+    url(r'comm/new/$',comm_view.comm_new),
     url(r'comm/(?P<uuid>[\w-]+)/',include(comm_urls)),
 
 ]

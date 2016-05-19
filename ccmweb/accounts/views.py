@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden,HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
+from communications.forms import CommunicationForm
 from communications.models import Communication
 from contacts.models import Contact
 from .forms import AccountForm
@@ -19,10 +20,12 @@ def account_detail(request,uuid):
 		return httpResponseForbidden()
 	contacts=Contact.objects.filter(account=account)
 	communications=Communication.objects.filter(account=account).order_by('-Created_on')
+	form=CommunicationForem()
 	variables={
 	'account':account,
 	'contacts': contacts,
 	'communications': communications,
+	'form':form,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)
