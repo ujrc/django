@@ -1,4 +1,4 @@
-from django.conf.urls import urls
+from django.conf.urls import url
 
 from communications import views as comm_view
 
