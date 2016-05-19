@@ -52,7 +52,7 @@ urlpatterns = [
      name='contact_delete'),
 
     # Communication related URLs
-    url(r'comm/new/$',comm_view.comm_new),
+    url(r'comm/new/$',comm_view.comm_cru),
     url(r'comm/(?P<uuid>[\w-]+)/',include(comm_urls)),
 
 ]

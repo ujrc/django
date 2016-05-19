@@ -4,6 +4,9 @@
 <p> {{contact.phone}}</p>
 <p> {{form.phone}} </p>
 <p class="con-cntrl">
+{# Contact Edit Link #}
+	<a class="pen edit-contact" href="{{ contact.get_absolute_url }}?account={{ account.id }}">Add new contact</a>
+</p>
 	{# Contact Edit Link #}
 	<a class="pen edit-contact" href="{{ contact.get_update_url }}?account={{ account.id }}">Edit</a>
 </p>
