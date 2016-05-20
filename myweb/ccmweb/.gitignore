@@ -1,0 +1,10 @@
+env
+Venv
+__pycache__
+*.DS_Store
+*.pyc
+htmlcov/
+.coverage
+*.py~
+key.txt
+stripe_key.txt
