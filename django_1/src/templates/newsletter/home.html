@@ -5,6 +5,13 @@
 	<title>trydjango1.8</title>
 </head>
 <body>
-	<h1>Hey there!</h1>
+	<h1>{{title}}</h1>
+	<p>{{user}}</p>
+    <p>{{request.user}}</p>
+    <form action="" method="POST">
+    {%csrf_token%}
+    {{form.as_p}}
+    	<input type="submit" value="Sign Up">
+    </form>
 </body>
 </html>

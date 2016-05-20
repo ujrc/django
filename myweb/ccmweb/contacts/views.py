@@ -34,7 +34,7 @@ def contact_detail(request,uuid):
 # 		form = ContactForm(request.POST,instance=contact)
 # 		if form.is_valid():
 # 			# make sure the user owns the account
-# 			account=form.cleaned_data['account']
+# 			account=form.cleaned_data.get('account') !!!!
 # 			if account.owner!=request.user:
 # 				return HttpResponseForbidden()
 # 			# # save the data

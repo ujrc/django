@@ -21,4 +21,5 @@ from newsletter import views as newsletter_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',newsletter_view.home,name='home'),
+    url(r'^contact/$',newsletter_view.contact,name='contact'),
 ]
