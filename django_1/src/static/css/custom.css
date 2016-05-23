@@ -1,0 +1,33 @@
+.navbar-static-top{
+	margin-bottom:0px !important;
+	background: #233E1F;
+	border-color:#1A5F23;
+}
+.text-align-center{
+  text-align: center;
+}
+.jumbotron{
+	background-color: #233E1F;
+	color: #ffffff;
+}
+.navbar-default
+.navbar-brand{
+	color:#FBFBFB;
+}
+
+.navbar-default .navbar-brand:hover{
+	color:#777;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color:#E8E0E0;
+}
+.navbar-default .navbar-toggle {
+border-color:transparent !important;
+}
+.navbar-toggle{
+background-color:#233E1F !important;
+}
+.navbar-toggle:hover{
+background-color:#2D6518 !important;
+}

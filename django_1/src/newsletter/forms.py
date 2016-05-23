@@ -5,9 +5,12 @@ from .models import SignUp
 #Custom form
 
 class ContactForm(forms.Form):
-	full_name = forms.CharField(required=False)
-	email = forms.EmailField()
-	message = forms.CharField(widget=forms.Textarea)
+	full_name = forms.CharField(required=False,widget=forms.TextInput(
+		attrs={'class':'form-control'}))
+	email = forms.EmailField(widget=forms.TextInput(
+		attrs={'class':'form-control'}))
+	message = forms.CharField(widget=forms.Textarea(
+		attrs={'class':'form-control'}))
 
 class SignUpForm(forms.ModelForm):
 	class Meta:

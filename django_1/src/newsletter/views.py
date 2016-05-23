@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from .forms import SignUpForm, ContactForm
 # Create your views here.
+from django.conf import settings
+from django.core.mail import send_mail
+
+from .forms import SignUpForm, ContactForm
 def home(request):
 	title="Welcome"
 	# if request.user.is_authenticated():
@@ -32,19 +35,34 @@ def home(request):
 	return render(request,'newsletter/home.html',context)
 
 def contact(request):
+	title="Contact Us"
+	title_align_center=True
 	form=ContactForm(request.POST or None)
 	if form.is_valid():
-		email=form.cleaned_data.get('email')
-		message=form.cleaned_data['message']
-		full_name=form.cleaned_data['full_name']
+		from_email=form.cleaned_data.get('email')
+		from_message=form.cleaned_data['message']
+		from_full_name=form.cleaned_data['full_name']
+		subject='Site Contact Form'
+		from_email=settings.EMAIL_HOST_USER
+		to_email =[from_email,'otheremail@gmail.com']
+		contact_message ="%s:%s via %s" %(
+			from_full_name,
+			from_message,
+			from_email)
+
+		send_mail(subject,
+			contact_message,
+			from_email,to_email,fail_silently=False)
 		# print (email,full_name,message)
 		# print(form.cleaned_data)
-		for key in form.cleaned_data:
-			# print (key)
-			print(form.cleaned_data[key])
-			print(form.cleaned_data.get(key))
+		# for key in form.cleaned_data:
+		# 	# print (key)
+		# 	print(form.cleaned_data[key])
+		# 	print(form.cleaned_data.get(key))
 	context={
 	'form':form,
+	'title':title,
+	'title_align_center':title_align_center,
 	}
 	template='newsletter/forms.html'
 

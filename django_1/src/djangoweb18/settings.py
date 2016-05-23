@@ -32,6 +32,11 @@ SECRET_KEY=pass_keys['SECRET_KEY']
 # print (SECRET_KEY)
 ALLOWED_HOSTS = []
 
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='example@gmail.com'
+EMAIL_HOST_PASSWORD=pass_keys['email_password']
+EMAI_PORT=587
+EMAIL_USE_TLS=True
 
 # Application definition
 
@@ -40,9 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',# added
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'newsletter',
+    'crispy_forms',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -129,3 +137,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS =[os.path.join(BASE_DIR,'static')]
+STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'static_cdn')
+
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR),'media_cdn')
+
+# Registration-redux 
+ACCOUNT_ACTIVATION_DAYS= 7
+REGISTRATION_AUTO_LOGIN=True
+LOGIN_REDIRECT_URL='/'
+
+SITE_ID=1
+
+# # crispy-form settins
+CRISPY_TEMPLATE_PACK='bootstrap3'
+
