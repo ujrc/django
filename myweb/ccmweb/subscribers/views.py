@@ -12,15 +12,18 @@ from .models import Subscriber
 import stripe
 
 def subscriber_new(request,template='subscribers/subscriber_new.html'):
-	if request.method=="POST":
-		form=SubscriberForm(request.POST)
+	if request.POST:
+		form=SubscriberForm(request.POST or None)
 		if form.is_valid():
+
 			# Unpack form values
 			username=form.cleaned_data['username']
 			password=form.cleaned_data['password1']
+			confirm_password=form.cleaned_data['password2']
 			email=form.cleaned_data['email']
 			first_name=form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
+			# print(username,email)
 
 			# Create the User record
 			
@@ -37,6 +40,7 @@ def subscriber_new(request,template='subscribers/subscriber_new.html'):
 
 			subscriber=Subscriber(address_one=address_one,address_two=address_two,
 				city=city,state=state,user_sub=user)
+			print (first_name,username,city)
 			subscriber.save()
 
 			# Process payment (via Stripe)
@@ -45,7 +49,7 @@ def subscriber_new(request,template='subscribers/subscriber_new.html'):
 			try:
 				stripe_customer=subscriber.charge(request,email,fee)
 			except stripe.StripeError as e:
-				form.errors[NON_FIELD_ERRORS]=form.error_clss([e.args[0]])
+				form.errors[NON_FIELD_ERRORS]=form.error_class([e.args[0]])
 
 				return render(request, template,
 						{'form':form,

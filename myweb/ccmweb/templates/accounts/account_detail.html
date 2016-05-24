@@ -1,12 +1,11 @@
 {% extends "base.html"%}
 {%block content%}
-
-<div id="content-container" class="container p-none">
+<div id="content-container" class="container p-none jumbotron">
 	<div id="ad-container">
-        <div id="gi-container" class="ad-container">
-            {% include 'accounts/account_item_view.html' %}
-        </div>
-     </div>
+		<div id="gi-container" class="ad-container">
+			{% include 'accounts/account_item_view.html' %}
+		</div>
+	</div>
 	{# List Contacts #}
 	<div id="cd-container" class="ad-container">
 		<div class="ad-headers">
@@ -15,15 +14,12 @@
 		<div id="cd-body" class="row">
 			<div id="cd-div" class="contact contact-hover">
 				<p></p>
-				<p>
-					{% for contact in contacts %}
-						
-						{% include 'contacts/contact_item_view.html' %}
-					{% endfor %}
-				</p>
+				<p>{% for contact in contacts %}
+					{% include 'contacts/contact_item_view.html' %}
+				{% endfor %}</p>
 			</div>
 			{# New Contact Link #}
-			<a id="new-contact" class="btn btn-link" href="{% url 'contact_new'%}?account={{ account.id }}">New Contact</a>
+			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contact_new'%}?account={{ account.id }}">New Contact</a>
 		</div>
 	</div>
 	

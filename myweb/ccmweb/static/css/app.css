@@ -2,3 +2,51 @@
 	width: 300;
 	height: 350;
 }
+.navbar-static-top{
+	margin-bottom:0px !important;
+	background-color:#061C27;
+	border-color: #37617B;
+
+}
+
+body{
+	background-color: #095B84;
+	color:white;
+}
+.container>.navbar-header {
+	
+}
+
+.jumbotron {
+	background-color:#1C4F6F;
+	color: white;
+	text-align: justify;
+	padding:0px 80px;
+}
+hr{
+	border-color: #37617B;
+}
+.text-align-center{
+	text-align: center;
+
+}
+a:focus, a:hover {
+    color: #C6EAE3;
+}
+{
+		color:white;
+	}
+.edit-account,.al-name ,#new-contact,span>a.p-r-none{
+	color:#E2EFEF;
+}
+.edit-account:hover, .al-name:hover ,#new-contact:hover{
+color:#9E999E;
+}
+.sgn-btm{
+	color: #A6DAF5;
+}
+
+.sgn-btm:hover
+.sgn-btm:focus{
+color:#5B9DBD;
+}

@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -26,42 +26,14 @@
 	{% block head_css_section %}{% endblock head_css_section %}
 {% block head_css_page %}{% endblock head_css_page %}
 {% endblock head_css%}
-{% block head_style%}
-
-{% endblock head_style%}
+{% block head_style%}{% endblock head_style%}
 </head>
 <body>
-{# Navigation Menu #}
-<header>
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-{% block nav-style %}{% endblock nav-style %}
-<div class="container">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="/">CCM Web</a>
-	</div>
-	<div class="collapse navbar-collapse">
-		<ul class="nav navbar-nav navbar-right">
-			{% if user.is_authenticated %}
-				<li><a href="/logout/">Logout</a></li>
-				<li><a href="{% url 'account_list'%}" class="p-r-none">Accounts</a></li>
-			{% else %}
-				<li><a href="/login/">Login</a></li>
-				<li><a class="p-r-none" href="{% url 'sub_new'%}">Sign Up</a></li>
-			{% endif %}
-		</ul>
-	</div>
-	
-</div>
-</div>
-</header>
+{% include 'navbar.html'%}
 {# The Document Body #}
 <div id="site-wrapper">
+{% block jumbotron %}
+{% endblock jumbotron %}
 {% block content %}
 if you see this, something is wrong!
 {% endblock content %}
@@ -74,13 +46,5 @@ if you see this, something is wrong!
 </div>
 </div>
 </body>
-{% block footer_javascript %}
-{% block footer_javascript_site %}
-<script src="{% static "js/bootstrap.min.js"%}"></script>
-<script src="{% static "js/jquery.min.js"%}"></script>
-<script src="{% static "js/app.js"%}"></script>
-{% endblock footer_javascript_site %}
-{% block footer_javascript_section %}{% endblock footer_javascript_section %}
-{% block footer_javascript_page %}{% endblock footer_javascript_page %}
-{% endblock footer_javascript %}
+{% include 'javascript.html'%}
 </html>

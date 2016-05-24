@@ -37,8 +37,8 @@ urlpatterns = [
 
     # Subscribers URL
     url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
-    url(r'^login/$',django_view.login,{'template_name':'login.html'}),
-    url(r'^logout/$',django_view.logout,{'next_page':'/login/'}),
+    url(r'^login/$',django_view.login,{'template_name':'login.html'},name='login'),
+    url(r'^logout/$',django_view.logout,{'next_page':'/login/'},name='logout'),
     # Account related URLs
     
     url(r'^account/new/$',accounts_view.account_cru,name='account_new'),

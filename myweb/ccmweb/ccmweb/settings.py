@@ -30,26 +30,21 @@ def get_env_variable(var_name):
 # Get ENV VARIABLES key
 ENV_ROLE =get_env_variable('ENV_ROLE')
 
-
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '*u()=%-o#2&h56+(&70zypf)@ofg%kl(5+++y@+8s5zt^qb322'
-
-with open('ccmweb/key.txt') as f:
-    SECRET_KEY = f.read().strip()
+paths=os.path.join(BASE_DIR,'ccmweb/key.txt')
+pass_keys=eval(open(paths).read())
+SECRET_KEY =pass_keys['SECRET_KEY']
+CCMWEB_DB_PASS=pass_keys['db_password']
 
 # Stripe Key Settings
-new_key=[]
-with open('ccmweb/stripe_key.txt') as file:
-    keys= file.read().strip().split('\n')
-    for key in keys:
-        new_key.append(key)
-STRIPE_SECRET_KEY=new_key[0]
-STRIPE_PUBLISHABLE_KEY=new_key[1]
+paths_stripe=os.path.join(BASE_DIR,'ccmweb/stripe_key.txt')
+new_key=eval(open(paths_stripe).read())
+STRIPE_SECRET_KEY=new_key['STRIPE_SECRET']
+STRIPE_PUBLISHABLE_KEY=new_key['STRIPE_PUBLISHABLE']
 
 # Current Subscription Price
 SUBSCRIPTION_PRICE = 1500

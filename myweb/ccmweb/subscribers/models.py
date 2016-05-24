@@ -27,7 +27,8 @@ class Subscriber(models.Model):
 		stripe.api_key=settings.STRIPE_SECRET_KEY
 
 		# Get the credit card details submitted by the form
-		token = request.POST['stripeToken']
+
+		token = request.POST.get('stripeToken',None)
 
 		# Create a Customer
 		stripe_customer = stripe.Customer.create(

@@ -5,7 +5,7 @@ from .models import Contact
 class ContactForm(forms.ModelForm):
 	class Meta:
 		model = Contact
-		fields = ['first_name','last_name','role','phone','email','account']
+		fields = ['first_name','last_name','role','phone','email']
 		widgets={
 		'first_name':forms.TextInput(
 			attrs={'placeholder':'First Name','class':'form-control'}),
