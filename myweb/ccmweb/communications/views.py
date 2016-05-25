@@ -44,7 +44,7 @@ def comm_cru(request,uuid=None,account=None):
 				return render(request,'communications/comm_item_view.html',
                               {'comm':comm, 'account':account})
 			else:
-				reverse_url= reverse('contacts.views.account_detail',
+				reverse_url= reverse('accounts.views.account_detail',
 					args=(account.uuid,))
 				return HttpResponseRedirect(reverse_url)
 		else:
@@ -85,7 +85,7 @@ class CommDelete(CommMixin,DeleteView):
 
 	def get_object(self,queryset=None):
 		obj=super(CommDelete,self).get_object()
-		if not obj.owner == sefl.request.user:
+		if not obj.owner == self.request.user:
 			raise Http404
 		account=Account.objects.get(id=obj.account.id)
 		self.account=account

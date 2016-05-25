@@ -12,7 +12,7 @@ class Account(models.Model):
 	city = models.CharField(max_length=60)
 	state = models.CharField(max_length=2)
 	phone = models.CharField(max_length=16)
-	owner = models.ForeignKey(User)
+	owner = models.ForeignKey(User,on_delete=models.CASCADE)
 	created_on=models.DateTimeField(auto_now_add=True)
 
 	class Meta:

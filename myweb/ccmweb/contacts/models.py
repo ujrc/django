@@ -14,8 +14,8 @@ class Contact(models.Model):
 	role = models.CharField(max_length=60)
 	phone=models.CharField(max_length=16)
 	email=models.EmailField()
-	account=models.ForeignKey(Account)
-	owner= models.ForeignKey(User)
+	account=models.ForeignKey(Account,on_delete=models.CASCADE)
+	owner= models.ForeignKey(User,on_delete=models.CASCADE)
 	created_on=models.DateTimeField(auto_now_add=True)
 
 	class Meta:

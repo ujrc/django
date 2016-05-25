@@ -7,7 +7,7 @@ from django.conf import settings
 import stripe
 
 class Subscriber(models.Model):
-	user_sub=models.ForeignKey(User)
+	user_sub=models.ForeignKey(User,on_delete=models.CASCADE)
 	address_one =models.CharField(max_length=100)
 	address_two =models.CharField(max_length=100,blank=True)
 	city = models.CharField(max_length=80)

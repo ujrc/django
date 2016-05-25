@@ -14,8 +14,8 @@ class Communication(models.Model):
 	notes=models.TextField()
 	kind =models.PositiveSmallIntegerField(choices=TYPE_LIST)
 	date=models.DateField()
-	owner= models.ForeignKey(User)
-	account=models.ForeignKey(Account)
+	owner= models.ForeignKey(User,on_delete=models.CASCADE)
+	account=models.ForeignKey(Account, on_delete=models.CASCADE)
 	Created_on =models.DateField(auto_now_add=True)
 
 	class Meta:
