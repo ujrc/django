@@ -21,15 +21,15 @@ from django.contrib.auth import views as django_view
 from marketing.views import HomePage
 from subscribers import views as subscribers_view
 
-# from accounts.views import AccountList
-# from accounts import views as accounts_view
-# from accounts.urls import account_urls
+from accounts.views import AccountList
+from accounts import views as accounts_view
+from accounts.urls import account_urls
 # from communications.views import CommDelete
 # from communications.urls import comm_urls
 # from communications import views as comm_view
-# from contacts.views import ContactDelete
-# from contacts import views as contacts_view
-# from contacts.urls import contact_urls
+from contacts.views import ContactDelete
+from contacts import views as contacts_view
+from contacts.urls import contact_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -37,20 +37,20 @@ urlpatterns = [
 
     # Subscribers URL
     url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
-    # url(r'^login/$',django_view.login,{'template_name':'login.html'},name='login'),
-    # url(r'^logout/$',django_view.logout,{'next_page':'/login/'},name='logout'),
-    # Account related URLs
+    url(r'^login/$',django_view.login,{'template_name':'login.html'},name='login'),
+    url(r'^logout/$',django_view.logout,{'next_page':'/login/'},name='logout'),
+    #Account related URLs
     
- #    url(r'^account/new/$',accounts_view.account_cru,name='account_new'),
- #    url(r'^account/list/$',AccountList.as_view(), name='account_list'),
- #    url(r'^account/(?P<uuid>[\w-]+)/',include(account_urls)),
+    url(r'^account/new/$',accounts_view.account_cru,name='account_new'),
+    url(r'^account/list/$',AccountList.as_view(), name='account_list'),
+    url(r'^account/(?P<uuid>[\w-]+)/',include(account_urls)),
 
- #    # Contact related  URLs
+    # Contact related  URLs
 
- #    url(r'^contact/new/$',contacts_view.contact_create, name='contact_new'),
- #    url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
- #    url(r'^contact/(?P<pk>[\w-]+)/delete/$',ContactDelete.as_view(),
- #     name='contact_delete'),
+    url(r'^contact/new/$',contacts_view.contact_create, name='contact_new'),
+    url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
+    url(r'^contact/(?P<pk>[\w-]+)/delete/$',ContactDelete.as_view(),
+     name='contact_delete'),
 
  # # Communication related URLs
  #    url(r'^comm/new/$',comm_view.comm_cru, name='comm_new'),
