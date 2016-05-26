@@ -23,10 +23,10 @@ class Contact(models.Model):
 
 	@property
 	def full_name(self):
-		return u'%s %s' % (self.first_name, self.last_name)
+		return '%s %s' % (self.first_name, self.last_name)
 
 	def __str__(self):
-		return u'%s' % self.full_name
+		return '%s' % self.full_name
 
 	@models.permalink
 	def get_absolute_url(self):

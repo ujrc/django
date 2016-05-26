@@ -30,8 +30,8 @@ class Communication(models.Model):
 
 	@models.permalink
 	def get_update_url(self):
-		return '%s' %'comm_update',[self.uuid]
+		return 'comm_update',[self.uuid]
 
 	@models.permalink
 	def get_delete_url(self):
-		return '%s' %'comm_delete',[self.uuid]
+		return 'comm_delete',[self.uuid]
