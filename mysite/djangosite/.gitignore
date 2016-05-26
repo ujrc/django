@@ -1,0 +1,4 @@
+file.txt
+__pycache__
+*.pyc
+*.py~
