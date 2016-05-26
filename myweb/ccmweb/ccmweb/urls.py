@@ -27,7 +27,7 @@ from accounts.urls import account_urls
 from communications.views import CommDelete
 from communications.urls import comm_urls
 from communications import views as comm_view
-from contacts.views import ContactDelete, ContactCreate,UpdateView
+from contacts.views import ContactDelete #ContactCreate,UpdateView
 from contacts import views as contacts_view
 from contacts.urls import contact_urls
 
@@ -47,7 +47,7 @@ urlpatterns = [
 
     # Contact related  URLs
 
-    url(r'^contact/new/$',ContactCreate.as_view(), name='contact_new'),
+    url(r'^contact/new/$',contacts_view.contact_cru, name='contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
     url(r'^contact/(?P<pk>\d+)/delete/$',ContactDelete.as_view(),
      name='contact_delete'),

@@ -1,0 +1,2 @@
+{'db_password':'postgres',
+'SECRET_KEY':'*u()=%-o#2&h56+(&70zypf)@ofg%kl(5+++y@+8s5zt^qb322'}

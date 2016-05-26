@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -20,53 +20,63 @@ def contact_detail(request,uuid):
 	return render(request,
 		'contacts/contact_detail.html',{'contact':contact})
 
-# @login_required
-# def contact_cru(request,uuid=None,account=None):
-# 	if uuid:
-# 		contact=get_object_or_404(Contact,uuid=uuid)
-# 		if contact.owner!=request.user:
-# 			return HttpResponseForbidden()
-# 	else:
-# 		contact=Contact(owner=request.user)
-# 	if request.POST:
-# 		form=ContactForm(request.POST,instance=contact)
-# 		if form.is_valid():
-# 			# make sure the user owns the account
-# 			account=form.cleaned_data['account']
-# 			if account.owner != request.user:
-# 				return HttpResponseForbidden()
-# 			# comm=form.save(commit=False)
-# 			# comm.owner=request.user
-# 			# comm.save()
-# 			form.save()
-# 			# return the user to the account detail view
-# 			if request.is_ajax():
-# 				return render(request,'contacts/contact_item_view.html',
-# 							  {'contact':contact, 'account':account})
-# 			else:
-# 				reverse_url= reverse('accounts.views.account_detail',
-# 					args=(account.uuid,))
-# 				return HttpResponseRedirect(reverse_url)
-# 		else:
-# 			# if the form isn't valid, still fetch the account so it can be passed to the template
-# 			account = form.cleaned_data['account']
+@login_required
+def contact_cru(request, uuid=None, account=None):
 
-# 	else:
-# 		form=ContactForm(instance=contact)
-# 	# this is used to fetch the account if it exists as a URL parameter
-# 	if request.GET.get('account'):
-# 		account = Account.objects.get(pk=request.GET.get('account'))
-# 	context_data={
-# 	'form':form,
-# 	'contact':contact,
-# 	'account':account
-# 	}
-# 	if request.is_ajax():
-# 		template_name= 'contacts/contact_item_form.html'
-# 	else:
-# 		template_name= 'contacts/contact_cru.html'
-# 	return render(request,template_name,context_data)
+	if uuid:
+		contact = get_object_or_404(Contact, uuid=uuid)
+		if contact.owner != request.user:
+			return HttpResponseForbidden()
+	else:
 
+		contact = Contact(owner=request.user)
+
+	if request.POST:
+		form = ContactForm(request.POST, instance=contact)
+		if form.is_valid():
+			# make sure the user owns the account
+			account = form.cleaned_data['account']
+			print(account)
+
+			if account.owner != request.user:
+
+				return HttpResponseForbidden()
+			# save the data
+			form.save()
+
+			# contact = form.save(commit=False)
+			# contact.owner = request.user
+			# contact.save()
+			# return the user to the account detail view
+			if request.is_ajax():
+				return render(request,
+							  'contacts/contact_item_view.html',
+							  {'account':account, 'contact':contact}
+				)
+			else:
+				reverse_url = reverse(
+					'accounts.views.account_detail',
+					args=(account.uuid,)
+				)
+				return HttpResponseRedirect(reverse_url)
+	else:
+		form = ContactForm(instance=contact)
+
+	if request.GET.get('account', ''):
+		account = Account.objects.get(id=request.GET.get('account', ''))
+
+	variables = {
+		'form': form,
+		'contact': contact,
+		'account': account
+	}
+
+	if request.is_ajax():
+		template = 'contacts/contact_item_form.html'
+	else:
+		template = 'contacts/contact_cru.html'
+
+	return render(request, template, variables)
 
 class ContactMixin(object):
 	model=Contact
@@ -79,27 +89,6 @@ class ContactMixin(object):
 	def dispatch(self,*args,**kwargs):
 		return super(ContactMixin,self).dispatch(*args,**kwargs)
 
-class ContactCreate(ContactMixin,CreateView):
-	model =Contact
-	fields = ['first_name','last_name','role','email','phone']
-	template_name='contacts/contact_cru.html'
-	
-
-class ContactUpdate(ContactMixin,UpdateView):
-	model =Contact
-	fields = ['first_name','last_name','role','email','phone']
-	template_name='contacts/contact_cru.html'
-# class ContactMixin(object):
-# 	model=Contact
-
-# 	def get_context_data(self,**kwargs):
-# 		kwargs.update({'object_name':'Contact'})
-# 		return kwargs
-
-# 	@method_decorator(login_required)
-# 	def dispatch(self,*args,**kwargs):
-# 		return super(ContactMixin,self).dispatch(*args,**kwargs)
-
 
 class ContactDelete(ContactMixin,DeleteView):
 	template_name= 'object_confirm_delete.html'
@@ -108,7 +97,7 @@ class ContactDelete(ContactMixin,DeleteView):
 		obj=super(ContactDelete,self).get_object()
 		if not obj.owner ==self.request.user:
 			raise Http404
-		account =Account.objects.get(id=obj.account.id)
+		account =Account.objects.get(pk=obj.account.id)
 		self.account=account 
 		return obj
 
@@ -116,60 +105,3 @@ class ContactDelete(ContactMixin,DeleteView):
 		return reverse(
 			account_detail,args=(self.account.uuid))
 
-# @login_required
-# def contact_cru(request, uuid=None, account=None):
-
-# 	if uuid:
-# 		contact = get_object_or_404(Contact, uuid=uuid)
-# 		if contact.owner != request.user:
-# 			return HttpResponseForbidden()
-# 	else:
-
-# 		contact = Contact(owner=request.user)
-
-# 	if request.POST:
-# 		form = ContactForm(request.POST, instance=contact)
-# 		if form.is_valid():
-# 			# make sure the user owns the account
-# 			account = form.cleaned_data.get('account',None)
-# 			print(account)
-
-# 			if account.owner != request.user:
-
-# 				return HttpResponseForbidden()
-# 			# save the data
-# 			form.save()
-
-# 			# contact = form.save(commit=False)
-# 			# contact.owner = request.user
-# 			# contact.save()
-# 			# return the user to the account detail view
-# 			if request.is_ajax():
-# 				return render(request,
-# 							  'contacts/contact_item_view.html',
-# 							  {'account':account, 'contact':contact}
-# 				)
-# 			else:
-# 				reverse_url = reverse(
-# 					'accounts.views.account_detail',
-# 					args=(account.uuid,)
-# 				)
-# 				return HttpResponseRedirect(reverse_url)
-# 	else:
-# 		form = ContactForm(instance=contact)
-
-# 	if request.GET.get('account', ''):
-# 		account = Account.objects.get(id=request.GET.get('account', ''))
-
-# 	variables = {
-# 		'form': form,
-# 		'contact': contact,
-# 		'account': account
-# 	}
-
-# 	if request.is_ajax():
-# 		template = 'contacts/contact_item_form.html'
-# 	else:
-# 		template = 'contacts/contact_cru.html'
-
-# 	return render(request, template, variables)
