@@ -1,2 +1,0 @@
-{'STRIPE_SECRET':'sk_test_eLOAQ2fTSUP2kEzA0m1zTggJ',
-'STRIPE_PUBLISHABLE':'pk_test_dJw7BvLNuVwDUng0spMG9kl1'}
