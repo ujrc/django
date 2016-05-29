@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{% block head_title%}Add a New Album{% endblock head_title%}
+{% block alums_active%}active{% endblock alums_active%}
+{% block content %}
+<div class="container-fluid">
+<div class="row">
+	<div class="col-sm-12 col-md-7">
+		<div class="panel panel-default">
+			<div class="panel-body">
+			<h3>Add a New Album</h3>
+			{% if error_message%}
+			<p><strong>{{error_message}}</strong></p>
+			{%endif%}
+				<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+					{%csrf_token%}
+					{%include 'musics/form-template.html'%}
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-success">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock content %}

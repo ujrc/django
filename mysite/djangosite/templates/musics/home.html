@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-{% if all_albums%}
-<h3>Here are all the albums</h3>
-	<ul>
-	{% for album in all_albums%}
-		<li><a href="{%url 'musics:detail' album.id%}">{{album.album_title}}</a></li>
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block head_title%}albums{% endblock head_title%}
+{% block content%}
+{% if object_list%}
+	<div class="row">
+		{% for album in object_list%}
+			<div class="col-sm-4 col-lg-2">
+				<div class="thumbnail">
+					<!-- Album logo -->
+					<a href="{% url 'musics:detail' album.id%} ">
+					<img src="{{album.album_logo.url}}" class="img-responsive" style="width:180px; height: 160px; " alt=""> </a>
+					<div class="caption">
+						<h2>{{album.album_title}}</h2>
+						<h4>{{album.artist}}</h4>
+						<!-- Detail -->
+						<a class="btn btn-primary btn-sm" href="{%url 'musics:detail' album.id%}">View Details</a>
+						<!-- Edit -->
+						<a class="btn btn-primary btn-sm" href="{%url 'musics:album-update' album.id%}">Edit</a>
+						<!-- delete -->
+						<form id="form-delete" action="{%url 'musics:album-delete' album.id%}" method="post" style="display: inline;" >{%csrf_token%}
+							<input type="hidden" name="album_id" value="{{album.id">	<button type="submit" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-trash"></span></button>
+						</form>
+						<!-- favorite -->
+						<a href="" class="btn btn-default btn-sm btn-favorite"> <span class="glyphicon glyphicon-star">{% if album.is_favorite%}active{% endif%}</span></a>
+					</div>
+				</div>
+			</div>
 		{% endfor%}
-	</ul>
-	{% else%}
+	</div>
+{% else%}
 	<h3>There is no album</h3>
 	{%endif%}
-</body>
-</html>
+	{% include 'musics/pagination.html'%}
+{% endblock content%}
