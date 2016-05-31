@@ -18,9 +18,11 @@ from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import login,logout
+from djangosite.views import HomePageView
 
 
 urlpatterns = [
+    url(r'^$',HomePageView.as_view(),name='homepage'),
     url(r'^admin/', admin.site.urls),
     url(r'^music/',include('musics.urls')),
     url(r'^login/$',login,{'template_name':'registration/login.html'},name='login'),

@@ -85,7 +85,7 @@ class CommDelete(CommMixin,DeleteView):
 		obj=super(CommDelete,self).get_object()
 		if not obj.owner == self.request.user:
 			raise Http404
-		account=Account.objects.get(pk=obj.account.id)
+		account=Account.objects.get(pk=obj.account.uuid)
 		self.account=account
 		return obj
 

@@ -1,12 +1,13 @@
-from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views import generic
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView,DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView,DeleteView
 
 from .models import Album,Song
@@ -14,13 +15,8 @@ from .forms import UserForm
 
 from django.views.generic.base import TemplateView
 from django.db.models import Q
-class HomePage(TemplateView):
-	""" Because our needs are so simple, all we have to do is
-    assign one value; template_name. The home.html file will be created
-    in the next lesson.    """
-	template_name='marketing/homepage.html'
 
-class HomeView(generic.ListView):
+class HomeView(ListView):
 	model=Album
 	template_name='musics/home.html'
 	paginate_by = 10
@@ -37,7 +33,20 @@ class HomeView(generic.ListView):
 			return queryset_list
 
 
-class DetailView(generic.DetailView):
+# class LoginRequiredMixin(object):
+# 	"""Ensures that user must be authenticated in order to access view."""
+
+# 	@method_decorator(login_required)
+# 	def dispatch(self, *args, **kwargs):
+# 		return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+		
+class RestrictToOwnerMixin(LoginRequiredMixin):
+	def get_queryset(self):
+		return self.model.objects.filter(user=self.request.user)
+
+
+class DetailView(DetailView):
 	model=Album
 	template_name ='musics/detail.html'
 
@@ -45,24 +54,28 @@ class DetailView(generic.DetailView):
 class AlbumCreate(CreateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
+	
 
-	@method_decorator(login_required)
-	def dispatch(self,*args,**kwargs):
-		return super(AlbumCreate,self).dispatch(*args,**kwargs)
-
-
-class AlbumUpdate(UpdateView):
+class AlbumUpdate(RestrictToOwnerMixin,UpdateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
 
-	@method_decorator(login_required)
-	def dispatch(self,*args,**kwargs):
-		return super(AlbumUpdate,self).dispatch(*args,**kwargs)
-
 		
-class AlbumDelete(DeleteView):
+class AlbumDeleteView(RestrictToOwnerMixin,DeleteView):
 	model =Album
+	template_name='musics/object_confirm_delete.html'
 	success_url=reverse_lazy('musics:home')
+	success_message = " Thing was deleted successfully."
+
+	def delete_album(self, request,* args ,**kwargs):
+		messages.success(self.request,self.success_message)
+		return super(AlbumDeleteView,self).delete_album(request,*args,**kwargs)
+
+	# def post(self, request, *args, **kwargs):
+	# 	if request.POST["cancel"]:
+	# 		return 
+	# 	else:
+ #            return super(AlbumDeleteView, self).post(request, *args, **kwargs)
 
 
 class UserFormView(View):
@@ -78,22 +91,33 @@ class UserFormView(View):
 	def post(self,request):
 		form=self.form_class(request.POST)
 		if form.is_valid():
-			usr=form.save(commit=False)
-
+			user=form.save(commit=False)
 			# Cleaned data( data formated properly)
 			username=form.cleaned_data['username']
 			password=form.cleaned_data['password']
-			usr.set_password(password)
-			usr.save()
+			user.set_password(password)
+			user.save()
 			# retun User objects if credentials are correct
-			usr=authenticate(username=username, password=password)
+			user=authenticate(username=username, password=password)
 
-			if usr  is not None:
-				if usr.is_active:
-					login(request,usr)
+			if user  is not None:
+				if user.is_active:
+					login(self.request,user)
 					return redirect('musics:home')
 		return render(request,self.template_name,{'form':form})
 
 
+class SongDetailView(LoginRequiredMixin,DetailView):
+	model= Song
+	template_name ='musics/song_list.html'
+	context_object_name='song_list'
 
+	def get_context_data(self,**kwargs):
+		context =super(Song,self).get_context_data(**kwargs)
+		context['slug'] =self.kwargs['slug']
+		return context
 
+	def get_queryset(self):
+		album =Album.objects.get(user=self.request.user)
+		if album.user_id:
+			return Song.objects.filter(album=album)

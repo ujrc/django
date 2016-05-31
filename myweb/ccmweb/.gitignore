@@ -6,3 +6,5 @@ __pycache__
 htmlcov/
 .coverage
 *.py~
+key.txt
+stripe_key.txt

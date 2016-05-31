@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.contrib.auth.models import User
 from shortuuidfield import ShortUUIDField
+from django.core.urlresolvers import reverse
 class Account(models.Model):
 	uuid=ShortUUIDField(unique=True)
 	name=models.CharField(max_length=100)
@@ -22,9 +23,8 @@ class Account(models.Model):
 	def __str__(self):
 		return "%s" %self.name
 
-	@models.permalink
 	def get_absolute_url(self):
-		return 'account_detail',[self.uuid]
+		return reverse('account_detail',{uuid=self.uuid})
 
 	@models.permalink
 	def get_update_url(self):

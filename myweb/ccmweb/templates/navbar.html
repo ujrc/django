@@ -14,17 +14,17 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li> <a href="{% url 'home'%}">Home</a></li>
+          <li> <a class="glyphicon glyphicon-home" href="{% url 'home'%}">Home</a></li>
           <li> <a href="#">Contact</a></li>
           <li> <a href="#">About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-            <li><a href="{% url 'account_list'%}" class="p-r-none">Accounts</a></li>
+            <li><a <a  class=" glyphicon glyphicon-off" href="{% url 'logout' %}">Logout</a></li>
+            <li><a <a  class=" glyphicon glyphicon-login" href="{% url 'account_list'%}" class="p-r-none">Accounts</a></li>
           {% else %}
-            <li><a href="{% url 'login'%}">Login</a></li>
-            <li><a class="p-r-none" href="{% url 'sub_new'%}">Sign Up</a></li>
+            <li><a  class=" glyphicon glyphicon-log-in" href="{% url 'login'%}">Login</a></li>
+            <li><a class="p-r-none glyphicon glyphicon-user" href="{% url 'sub_new'%}">SignUp</a></li>
             {%endif%}
         </ul>          
       </div><!--/.nav-collapse -->      

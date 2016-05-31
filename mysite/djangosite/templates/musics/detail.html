@@ -3,16 +3,16 @@
 {% block head_title%}Album Detail{% endblock head_title%}
 {% block content%}
 <div class="container">
-<img src="{{album.album_logo.url}}"  id="logo" style="width:250px; height: 180px;" alt="Album logo">
-<h1>{{album.album_title}}</h1>
-<h2>{{album.artist}} </h2>
-
-{%for song in album.song_set.all%}
-	{{song.song_title}}
-	{% if song.is_favorite %}
-		<img id="star" src="{% static 'musics/img/star.png'%}" style="width: 20px;height: 18px;" alt="star">
-	{% endif %}
-	</label><br>
-{%endfor%}
-</div>
+	{% if album.album_logo %}
+		<img src="{{album.album_logo.url}}" id="logo" style="width:250px; height: 180px;" alt="Album logo">
+	{% else %}
+		<img src="{% static 'musics/img/guitar.jpg'%}" style="width:250px; height: 180px;" alt="Album logo">
+		{%endif%}
+		<h1>{{album.album_title}}</h1>
+		<h2>{{album.artist}} </h2>
+		{%for song in album.song_set.all%}
+		<a href="{% url 'musics:songs' song.slug%}">{{song.song_title}}</a>
+		<br>
+		{%endfor%}
+	</div>
 {% endblock content%}
