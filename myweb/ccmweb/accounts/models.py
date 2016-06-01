@@ -24,7 +24,7 @@ class Account(models.Model):
 		return "%s" %self.name
 
 	def get_absolute_url(self):
-		return reverse('account_detail',{uuid=self.uuid})
+		return reverse('account_detail',kwargs={'uuid':self.uuid})
 
 	@models.permalink
 	def get_update_url(self):

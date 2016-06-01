@@ -21,6 +21,7 @@ def account_detail(request,uuid):
 		return httpResponseForbidden()
 
 	contacts=Contact.objects.filter(account=account)
+
 	communications=Communication.objects.filter(account=account).order_by('-Created_on')
 	
 	form=CommunicationForm()
@@ -33,7 +34,6 @@ def account_detail(request,uuid):
 	}
 
 	return render(request,'accounts/account_detail.html',variables)
-
 
 
 @login_required
