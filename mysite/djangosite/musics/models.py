@@ -65,7 +65,7 @@ def pre_save_reciever(sender, instance,*args,**kwargs):
 		instance.slug =create_slug(instance)
 
 pre_save.connect(pre_save_reciever,sender=Album)
-# pre_save.connect(pre_save_reciever,sender=Song)
+pre_save.connect(pre_save_reciever,sender=Song)
 
 
 

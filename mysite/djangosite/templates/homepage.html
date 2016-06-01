@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block head_title%}albums{% endblock head_title%}
+{% block content%}
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<section id="myCarousel" class="carousel slide" data-ride='carousel' style='width:600px;height:300px'>
+			<ol class='carousel-indicators'>
+				<li data-target="#myCarousel" data-slide-to="0" class='active'></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+				<li data-target="#myCarousel" data-slide-to="3"></li>
+			</ol>
+			<div class='carousel-inner'>
+				<figure class='item active'>
+					<!-- <img src="http://www.gto.org.tr/proje/upload/slayt/dunya-936021_w610_h360.jpg" alt='international'> -->
+					<img src="{% static 'musics/img/family.jpg'%}" alt='family'>
+					<figcaption class='carousel-caption'>
+					<h1> Welcome to Musvideos </h1>
+					</figcaption>
+				</figure>
+				<figure class='item '>
+					<img src="{% static 'musics/img/music.jpg'%}" alt='music'>
+					<figcaption class='carousel-caption'>
+					<h1>Tools to upload  and manage your musics and videos.</h1>
+					</figcaption>
+				</figure>
+			</figure>
+			<figure class='item '>
+				<img src="{% static 'musics/img/arrow.jpg'%}" alt='arrow'>
+				<figcaption class='carousel-caption'>
+				<h1>Tools to upload  and manage your musics and videos.</h1>
+				</figcaption>
+			</figure>
+		</figure>
+		<figure class='item '>
+			<img src="{% static 'musics/img/city.jpg'%}" alt='city'>
+			<figcaption class='carousel-caption'>
+			<h1>Tools to upload  and manage your musics and videos.</h1>
+			</figcaption>
+		</figure>
+	</div>
+	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+	<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+</section>
+</div>
+</div>
+{% endblock content%}

@@ -7,9 +7,7 @@ body {
     /*background: -moz-linear-gradient(0080ff, #0040ff); *//* For Firefox 3.6 to 15 */
     /*background: linear-gradient(0080ff, #0030ff); /* Standard syntax }*/
 
-    h1,h2,h3,.navbar .navbar-default{
-    	color:blue;
-    }
+  
     .navbar{
         border-radius: 0;
     }
@@ -23,3 +21,30 @@ body {
       width: 70%;
       margin: auto;
   }
+  .text-align-center{
+    text-align: center;
+  }
+
+.title div {
+  display: table-cell;
+  padding: 25px;
+}
+.horizontal{
+  list-style: none outside none;
+}
+.head1{
+  float: left;
+  display:block;
+  width:300px;
+  height: 40px;
+}
+.head{
+  float: left;
+  display:block;
+  width:90px;
+  height: 40px;
+}
+
+.inline li {
+    display: inline-block;
+}

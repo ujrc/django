@@ -2,80 +2,65 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
-from django.utils.decorators import method_decorator
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import View, ListView,DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView,DeleteView
 
-from .models import Album,Song
 from .forms import UserForm 
+from .models import Album,Song
 
-from django.views.generic.base import TemplateView
-from django.db.models import Q
 
-class HomeView(ListView):
+class RestrictToOwnerMixin(LoginRequiredMixin):
+	def get_queryset(self):
+		return self.model.objects.filter(user=self.request.user)
+
+
+class HomeView(RestrictToOwnerMixin,ListView):
 	model=Album
 	template_name='musics/home.html'
 	paginate_by = 10
 
 	def get_queryset(self):
-		queryset_list=super(HomeView,self).get_queryset()
-		query = self.request.GET.get("q")
-		if query:
-			qs=queryset_list.filter(
-				Q(album_title__contains=query)|
-				Q(artist__contains=query))
-			return qs
-		else:
-			return queryset_list
-
-
-# class LoginRequiredMixin(object):
-# 	"""Ensures that user must be authenticated in order to access view."""
-
-# 	@method_decorator(login_required)
-# 	def dispatch(self, *args, **kwargs):
-# 		return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
-
-		
-class RestrictToOwnerMixin(LoginRequiredMixin):
-	def get_queryset(self):
-		return self.model.objects.filter(user=self.request.user)
+			queryset_list=super(HomeView,self).get_queryset()
+			query = self.request.GET.get("q")
+			if query:
+				qs=queryset_list.filter(
+					Q(album_title__contains=query)|
+					Q(artist__contains=query))
+				return qs
+			else:
+				return queryset_list
 
 
 class DetailView(DetailView):
 	model=Album
 	template_name ='musics/detail.html'
 
-	
+
 class AlbumCreate(CreateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
 	
 
-class AlbumUpdate(RestrictToOwnerMixin,UpdateView):
+class AlbumUpdate(LoginRequiredMixin,UpdateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
 
-		
-class AlbumDeleteView(RestrictToOwnerMixin,DeleteView):
+
+class AlbumDeleteView(LoginRequiredMixin,DeleteView):
 	model =Album
-	template_name='musics/object_confirm_delete.html'
 	success_url=reverse_lazy('musics:home')
 	success_message = " Thing was deleted successfully."
 
 	def delete_album(self, request,* args ,**kwargs):
 		messages.success(self.request,self.success_message)
 		return super(AlbumDeleteView,self).delete_album(request,*args,**kwargs)
-
-	# def post(self, request, *args, **kwargs):
-	# 	if request.POST["cancel"]:
-	# 		return 
-	# 	else:
- #            return super(AlbumDeleteView, self).post(request, *args, **kwargs)
 
 
 class UserFormView(View):
@@ -107,17 +92,28 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form':form})
 
 
+class SongListView(RestrictToOwnerMixin,ListView):
+	model=Song
+	template_name='musics/detail.html'
+
+
 class SongDetailView(LoginRequiredMixin,DetailView):
 	model= Song
-	template_name ='musics/song_list.html'
+	template_name ='musics/create_song.html'
 	context_object_name='song_list'
 
-	def get_context_data(self,**kwargs):
-		context =super(Song,self).get_context_data(**kwargs)
-		context['slug'] =self.kwargs['slug']
-		return context
-
 	def get_queryset(self):
-		album =Album.objects.get(user=self.request.user)
-		if album.user_id:
-			return Song.objects.filter(album=album)
+		return self.model.objects.filter(album__user=self.request.user)
+
+
+class SongCreateView(CreateView):
+	model=Song
+	fields =['song_title','file_type']
+
+class SongUpdateView(UpdateView):
+	model = Song
+
+class SongDeleteView(DeleteView):
+	model=Song
+	success_url = reverse_lazy('musics:songs')
+
