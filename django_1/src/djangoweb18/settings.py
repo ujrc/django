@@ -143,12 +143,12 @@ STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'static_cdn')
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR),'media_cdn')
 
-# Registration-redux 
-ACCOUNT_ACTIVATION_DAYS= 7
-REGISTRATION_AUTO_LOGIN=True
-LOGIN_REDIRECT_URL='/'
 
-SITE_ID=1
+#DJANGO REGISTRATION REDUX SETTINGS
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 # # crispy-form settins
 CRISPY_TEMPLATE_PACK='bootstrap3'

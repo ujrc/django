@@ -32,6 +32,10 @@ def home(request):
 		context={
 		'title':'Thank you for joining us',
 		}
+	if request.user.is_authenticated and request.user.is_staff:
+		context={
+		'queryset':[123,456]
+		}
 	return render(request,'newsletter/home.html',context)
 
 def contact(request):
