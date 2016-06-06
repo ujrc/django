@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 from .forms import SignUpForm, ContactForm
+from .models import SignUp
 def home(request):
 	title="Welcome"
 	# if request.user.is_authenticated():
@@ -33,8 +34,15 @@ def home(request):
 		'title':'Thank you for joining us',
 		}
 	if request.user.is_authenticated and request.user.is_staff:
+		# i=1
+		# for instance in SignUp.objects.all():
+		# 	print(instance.full_name)
+		# 	print(i)
+		# 	i+=1
+		queryset=SignUp.objects.all().order_by('-timestamp')#.filter(full_name__icontains='Steve')
+
 		context={
-		'queryset':[123,456]
+		'queryset':queryset,
 		}
 	return render(request,'newsletter/home.html',context)
 

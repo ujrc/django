@@ -43,7 +43,14 @@
 {% block content%}
 {% if request.user.is_authenticated%}
 <h1>You are logged in !</h1>
+{% if queryset %}
+<h1>Welcome to Staff</h1>
+{% for instance in queryset %}
+{{forloop.counter }}
+{{ instance.email }}&nbsp;&nbsp;{{instance.full_name}}
+&nbsp;&nbsp;{{instance.timestamp|timesince}} ago <br> {% endfor%}
 {{queryset}}
+{%endif%}
 {%else%}
 <div class="row">
   <div class="col-xs-3 pull-right">
@@ -66,15 +73,15 @@
   </div>
   <div class="col-xs-3">
     <p class="lead text-align-center">Created for Starters of all kinds. <br>
-      <span class="fa-stack fa-lg fa-5x">
+      <span class="fa-stack fa-lg fa-4x">
        <i class="fa fa-tablet fa-stack-2x " aria-hidden="true"></i>
-      <i id="blot" class="fa fa-bolt fa-spin fa-stack-1x" aria-hidden="true"></i></p>
+      <i id="blot" class="fa fa-bolt {#fa-spin#} fa-stack-1x" aria-hidden="true"></i></p>
     </span>
   </div>
   <div class="col-xs-3">
     <p class="lead text-align-center">Always Open source</p>
     <span class="fa-stack fa-lg fa-5x">
-      <i class="fa fa-circle-o-notch fa-spin fa-stack-2x"></i>
+      <i class="fa fa-circle-o-notch {#fa-spin#} fa-stack-2x"></i>
       <i class="fa fa-github fa-stack-1x"></i>
     </span>
     <span class="sr-only"></span>
