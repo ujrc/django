@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block head_title%}Welcome to {{block.super}}{% endblock head_title%}
+<style>
+{%block style%}
+{%endblock style%}
+</style>
+{% block jumbotron %}
+{% if request.user.is_anonymous %}
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h1>MVP Landing With Django 1.9</h1>
+        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+        <p>To see the difference between static and fixed top navbars, just scroll.</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
+        </p>
+      </div>
+      <div class="col-sm-6";
+        width:500px;">
+        <!-- {# Embed video on our website}
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/4OlGpS2LG_M?list=PLEsfXFp6DpzRcd-q4vR5qAgOZUuz8041S" frameborder="0" allowfullscreen></iframe> -->
+        <div class="homepage-hero-module"></div>
+        <div class="video-container">
+          <div class="filter"></div>
+          <video autoplay loop class="fillWidth">
+            <source src="{% static 'videos/MP4/Lonely-Chair.mp4'%}" type="video/mp4" />
+            <source src="{% static 'videos/WEBM/Lonely-Chair.webm'%}" type="video/webm" />
+            <source src="{% static 'videos/OGV/Lonely-Chair.ogv'%}" type="video/ogv" />
+          </video>
+          <div class="poster hidden">
+            <img src="{% static 'videos/Snapshots/Lonely-Chair.jpg'%}" alt="Lonely Chair">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endif%}
+{% endblock jumbotron %}
+{% block content%}
+{% if request.user.is_authenticated%}
+<h1>You are logged in !</h1>
+{% if queryset %}
+<h1>Welcome to Staff</h1>
+{% for instance in queryset %}
+{{forloop.counter }}
+{{ instance.email }}&nbsp;&nbsp;{{instance.full_name}}
+&nbsp;&nbsp;{{instance.timestamp|timesince}} ago <br> {% endfor%}
+{{queryset}}
+{%endif%}
+{%else%}
+<div class="row">
+  <div class="col-xs-3 pull-right">
+    <h1>{{title}}</h1>
+    <!--  <p>{{user}}</p>
+    <p>{{request.user}}</p> -->
+    <form action="" method="POST">
+      {%csrf_token%}
+      {{form.as_p}}
+      <input class="btn btn-primary" type="submit" value="Sign Up">
+      
+    </form>
+  </div>
+  <div class="col-xs-3">
+    <p class="lead text-align-center">Bultin with Django &amp; Bootstrap</p>
+    <figure>
+      <img class="img-responsive" src="{% static 'img/images.jpg'%}" alt="">
+      <figcaption><strong>Glob and stars</strong></figcaption>
+    </figure>
+  </div>
+  <div class="col-xs-3">
+    <p class="lead text-align-center">Created for Starters of all kinds. <br>
+      <span class="fa-stack fa-lg fa-4x">
+       <i class="fa fa-tablet fa-stack-2x " aria-hidden="true"></i>
+      <i id="blot" class="fa fa-bolt {#fa-spin#} fa-stack-1x" aria-hidden="true"></i></p>
+    </span>
+  </div>
+  <div class="col-xs-3">
+    <p class="lead text-align-center">Always Open source</p>
+    <span class="fa-stack fa-lg fa-5x">
+      <i class="fa fa-circle-o-notch {#fa-spin#} fa-stack-2x"></i>
+      <i class="fa fa-github fa-stack-1x"></i>
+    </span>
+    <span class="sr-only"></span>
+  </div>
+</div>
+{%endif%}
+{% endblock content%}</html>

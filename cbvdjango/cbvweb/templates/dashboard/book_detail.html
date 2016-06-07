@@ -1,0 +1,8 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<h1>{{object.title}}</h1>
+<p>{{object.description}}</p>
+{%include 'dashboard/single_form.html' with form=form btn_title=btn_title%}
+{#title="Comments" btn_title="Add Comment"#}
+{% endblock content %}
