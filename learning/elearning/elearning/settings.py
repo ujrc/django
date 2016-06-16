@@ -25,10 +25,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-pass_keys=eval(open(os.path.join(BASE_DIR,'elearning/keys.txt').read()))
+pass_keys=eval(open(os.path.join(BASE_DIR,'elearning/keys.txt')).read())
 db_password=pass_keys['db_password']
 SECRET_KEY=pass_keys['SECRET_KEY']
-
+# print(db_password)
 ALLOWED_HOSTS = []
 
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my apps
+    'courses',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -81,12 +83,11 @@ WSGI_APPLICATION = 'elearning.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'elearning',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'password',
+        'NAME': 'elearning_db',
+        'USER': 'elearning',
+        'PASSWORD': db_password,
         'HOST': 'localhost',
-        'PORT': '',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'PORT': '',
     }
 }
 
