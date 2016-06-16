@@ -1,0 +1,13 @@
+{% load myuser_extra %}
+{%for field in form %}
+
+<div class="form-group">
+<div class="col-xs-10 col-xs-offset-1">
+	<div class=" col-sm-offset-2 col-sm-10 ">
+		<span class="text-danger small">{{field.errors}}</span></div>
+	<div class="label-control col-sm-2"><label for="{{ field.id_for_label}}">{{field.label_tag}}</label></div>
+	<div class="col-sm-6">{{field|addcss:"form-control"}}
+	</div>	
+</div>
+</div>
+{%endfor%}

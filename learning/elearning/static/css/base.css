@@ -1,0 +1,39 @@
+body{
+	background-color:#d9dcdc;
+	color: inherit;
+}
+
+.container-fluid{
+	background-color:#3d6071;
+	border:none;
+	
+}
+.navbar-header .navbar-brand,
+.navbar-inverse .navbar-nav>li>a {
+	color: white;
+}
+.navbar {
+		border: none;
+	}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus,
+.navbar-inverse .navbar-nav>li>a:hover, 
+.navbar-inverse .navbar-nav>li>a:focus{
+   
+	color: #b3e7fd;
+}
+#home_jumbotron{
+	background-color: #c7cacc;
+}
+
+ .panel{
+
+	text-align: center;
+	background-color:#b6bebf;
+}
+
+.panel-default>.panel-heading {
+   
+    background-color: #b6c2c7;
+    border: none ;
+}

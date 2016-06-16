@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock title %}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading"><h1>LogIn</h1></div>
+				<div class=" panel-body">
+					<form id='login-form' class="form-horizontal" action="{% url 'login'%}" method="post">
+						{% csrf_token%}
+						<h4>Please ,use the following form to log-in:</h4>
+						{%include 'courses/template_form.html'%}
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<input type="hidden" name="next" value="{{ next }}" />
+								<p><input class="btn btn-success" type="submit" value="Log-in"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
