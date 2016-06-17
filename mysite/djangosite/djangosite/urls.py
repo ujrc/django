@@ -24,9 +24,9 @@ from djangosite.views import HomePageView
 urlpatterns = [
     url(r'^$',HomePageView.as_view(),name='homepage'),
     url(r'^admin/', admin.site.urls),
-    url(r'^music/',include('musics.urls')),
-    url(r'^login/$',login,{'template_name':'registration/login.html'},name='login'),
-    url(r'^logout/$',logout,{'template_name':'registration/logout.html','next_page':'/login/'},name='logout'),
+    url(r'^musics/',include('musics.urls')),
+    url(r'^accounts/login/$',login,{'template_name':'registration/login.html'},name='login'),
+    url(r'^accounts/logout/$',logout,{'template_name':'registration/logout.html','next_page':'/login/'},name='logout'),
 
  
 ]

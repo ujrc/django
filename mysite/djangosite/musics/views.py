@@ -6,13 +6,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View, ListView,DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView,DeleteView
 
-from .forms import UserForm 
+from .forms import UserForm
 from .models import Album,Song
 
 
@@ -38,7 +38,7 @@ class HomeView(RestrictToOwnerMixin,ListView):
 				return queryset_list
 
 
-class DetailView(DetailView):
+class AlbumDetailView(DetailView):
 	model=Album
 	template_name ='musics/detail.html'
 
@@ -46,7 +46,7 @@ class DetailView(DetailView):
 class AlbumCreate(CreateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
-	
+
 
 class AlbumUpdate(LoginRequiredMixin,UpdateView):
 	model =Album
@@ -92,23 +92,28 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form':form})
 
 
-class SongListView(RestrictToOwnerMixin,ListView):
+class SongListView(LoginRequiredMixin,ListView):
 	model=Song
-	template_name='musics/detail.html'
-
-
-class SongDetailView(LoginRequiredMixin,DetailView):
-	model= Song
-	template_name ='musics/create_song.html'
-	context_object_name='song_list'
+	template_name='musics/song_list.html'
 
 	def get_queryset(self):
-		return self.model.objects.filter(album__user=self.request.user)
+		return super(SongListView,self).get_queryset()
+
+
+
+class SongDetailView(RestrictToOwnerMixin,DetailView):
+	model= Song
+	slug_field ='slug_song'
+	template_name ='musics/song_detail.html'
+
+	def get_queryset(self, slug_song=None):
+		self.album = super(SongDetailView,self).get_queryset( slug_song=slug_song)
+		return self.model.objects.filter(album=self.album)
 
 
 class SongCreateView(CreateView):
 	model=Song
-	fields =['song_title','file_type']
+	fields =['album','song_title','file_type']
 
 class SongUpdateView(UpdateView):
 	model = Song
@@ -116,4 +121,3 @@ class SongUpdateView(UpdateView):
 class SongDeleteView(DeleteView):
 	model=Song
 	success_url = reverse_lazy('musics:songs')
-

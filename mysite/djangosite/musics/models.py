@@ -45,7 +45,7 @@ class Song(models.Model):
 		super(Song, self).save(*args, **kwargs)
 
 	def ge_absolute_url(self):
-		return reverse('musics:songs',kwargs={'slug': self.slug})
+		return reverse('song_list',kwargs={'slug': self.slug})
 
 
 def create_slug(instance,new_slug=None):
@@ -65,7 +65,7 @@ def pre_save_reciever(sender, instance,*args,**kwargs):
 		instance.slug =create_slug(instance)
 
 pre_save.connect(pre_save_reciever,sender=Album)
-pre_save.connect(pre_save_reciever,sender=Song)
+# pre_save.connect(pre_save_reciever,sender=Song)
 
 
 
