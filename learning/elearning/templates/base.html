@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 	<title>{%block title%}E-learning{% endblock title%}</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="{% static 'css/base.css'%}">
 {% block extra_css %} {% endblock extra_css%}
 </head>
@@ -14,11 +15,15 @@
 
 {% block content %}
 {% endblock %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script scr="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="{% static 'js/course.js'%} "></script>
 <script>
+
 $(document).ready(function() {
 {% block domready %}
+
 {% endblock %}
 });
 </script>

@@ -1,6 +1,6 @@
 body{
 	background-color:#d9dcdc;
-	color: inherit;
+	color: #123b5f;
 }
 
 .container-fluid{
@@ -31,7 +31,6 @@ body{
 	text-align: center;
 	background-color:#b6bebf;
 }
-
 .panel-default>.panel-heading {
    
     background-color: #b6c2c7;
@@ -44,4 +43,8 @@ a {
 .btn-success,
 .form-control{
 	margin-top: 20px;
+}
+a>span
+{
+	color: #123b5f;
 }

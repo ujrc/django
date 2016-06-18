@@ -74,7 +74,7 @@ class Module(models.Model):
 		return '{}.{}'.format(self.order,self.name)
 
 class Contents(models.Model):
-	module =models.ForeignKey(Module,related_name='content')#contents
+	module =models.ForeignKey(Module,related_name='contents')#contents
 	content_type=models.ForeignKey(ContentType, limit_choices_to={'model__in':['text',
 		'file','image','video']})
 	object_id= models.PositiveIntegerField()
@@ -84,4 +84,5 @@ class Contents(models.Model):
 
 	class Meta:
 		ordering =['order']
+		verbose_name_plural='contents'
 
