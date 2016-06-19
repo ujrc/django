@@ -2,17 +2,23 @@
 from django.apps import apps
 
 from django.core.urlresolvers import reverse_lazy,reverse
+from django.db.models import Count 
 from django.forms.models import modelform_factory
 from django.shortcuts import render,redirect, get_object_or_404
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 
 from braces.views import (LoginRequiredMixin,PermissionRequiredMixin,
 	CsrfExemptMixin, JsonRequestResponseMixin)
 from .forms import ModuleFormSet
-from .models import Course,Module,Contents
+from .models import Course,Module,Contents,Subject
+from students.forms import CourseEnrollForm
 
+class CourseDetailView(DetailView):
+	model = Course
+	template_name='courses/course/detail.html'
 class OwnerMixin(object):
 
 	def get_queryset(self):
@@ -37,7 +43,7 @@ class CourseOwnerEditMixin(CourseOwnerMixin,OwenerEditMixin):
 		return reverse('course_list')
 
 
-class CourseListView(CourseOwnerMixin,ListView):
+class ManageCourseListView(CourseOwnerMixin,ListView):
 	template_name ='courses/course_list.html'
 
 
@@ -56,7 +62,7 @@ class CourseDeleteView(PermissionRequiredMixin,CourseOwnerMixin, DeleteView):
 	permission_required='courses.delete_course'
 
 
-class CourseModuleUpdateView(TemplateResponseMixin,View):
+class CourseModuleUpdateView(UpdateView):
 	template_name = 'courses/formset.html'
 	course=None
 
@@ -132,14 +138,17 @@ class ContentCreateUpdateView(TemplateResponseMixin,View):
 			'object':self.obj})
 
 
-class ContentDeleteView(View):
+class ContentDeleteView(DeleteView):
+	template_name='courses/delete.html'
+
 	def post(self, request, id):
-		content = get_object_or_404(Content,id=id,
+		content = get_object_or_404(Contents,id=id,
 			module__course__owner=request.user)
 		module = content.module
 		content.item.delete()
 		content.delete()
 		return redirect('module_content_list', module.id)
+
 
 class ModuleContentListView(TemplateResponseMixin,View):
 	template_name = 'courses/content_list.html'
@@ -159,14 +168,6 @@ class OrderModuleView(CsrfExemptMixin,
 			Module.objects.filter(id=id,
 				course__owner=request.user).update(order=order)	
 		return self.render_json_response({'saved': 'OK'})
-# class OrderModuleView(CsrfExemptMixin,JsonRequestResponseMixin,View):
-	
-# 	def post(self,request):
-# 		for id, order in self.request_json.items():
-# 			Module.objects.filter(id=id,
-# 				course__owner=request.user).update(order=order)
-# 		return self.render_json_response({'saved':'OK'})
-
 
 class OrderContentsView(CsrfExemptMixin,JsonRequestResponseMixin,View):
 
@@ -175,3 +176,28 @@ class OrderContentsView(CsrfExemptMixin,JsonRequestResponseMixin,View):
 			Contents.objects.filter(id=id,
 				module__course__owner=request.user).update(order=order)
 		return self.render_json_response({'saved':'OK'})
+
+
+class CourseListView(TemplateResponseMixin,View):
+	model =CourseOwnerEditMixin
+	template_name ='courses/course/list.html'
+
+	def get(self,request,subject=None):
+		subjects=Subject.objects.annotate(total_courses=Count('courses'))
+		courses=Course.objects.annotate(total_modules=Count('modules'))
+		if subject:
+			subject=get_object_or_404(Subject,slug=subject)
+			courses =courses.filter(subject=subject)
+		return self.render_to_response({'subjects': subjects,
+			'subject': subject,'courses': courses})
+
+
+class CourseDetailView(DetailView):
+	model=Course
+	template_name ='courses/course/detail.html'
+		
+	def get_context_data(self,**kwargs):
+		context=super(CourseDetailView,self).get_context_data(**kwargs)
+		context['enroll_form']=CourseEnrollForm(
+			initial={'course':self.object})
+		return context

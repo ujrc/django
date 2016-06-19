@@ -4,6 +4,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 
 from .fields import OrderField
 
@@ -21,6 +23,9 @@ class BaseItemContent(models.Model):
 	def __str__(self):
 		return self.name
 
+	def render(self):
+		return render_to_string('courses/content/{}.html'.format(
+		self._meta.model_name), {'item': self})
 
 class Text(BaseItemContent):
 	content = models.TextField()
@@ -48,12 +53,12 @@ class Subject(models.Model):
 		return self.name
 class Course(models.Model):
 	owner =models.ForeignKey(User,related_name='course_created')# courses_created
-	subject=models.ForeignKey(Subject,related_name='course', on_delete=models.CASCADE)# courses
+	subject=models.ForeignKey(Subject,related_name='courses', on_delete=models.CASCADE)# courses
 	name = models.CharField(max_length=220) # title
 	slug = models.SlugField(max_length=220,unique=True)
 	overview =models.TextField()
 	created_on=models.DateTimeField(auto_now_add=True)
-
+	students = models.ManyToManyField(User,related_name='courses_joined',blank=True)
 	class Meta:
 		ordering=['-created_on']#created
 		verbose_name_plural='courses'

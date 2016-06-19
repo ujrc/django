@@ -28,6 +28,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^course/', include('courses.urls')),
+    url(r'^students/', include('students.urls')),
 ]
 
 if settings.DEBUG:
