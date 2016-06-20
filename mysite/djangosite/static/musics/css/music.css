@@ -48,3 +48,7 @@ body {
 .inline li {
     display: inline-block;
 }
+
+.img-circle{
+  margin-top: 20px;
+}

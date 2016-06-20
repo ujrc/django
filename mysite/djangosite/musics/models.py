@@ -6,7 +6,7 @@ from django.db.models.signals import pre_save
 # Create your models here.
 
 class Album(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=2)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	artist=models.CharField(max_length=200)
 	album_title=models.CharField(max_length=300)
 	genre=models.CharField(max_length=80)
@@ -25,13 +25,17 @@ class Album(models.Model):
 	class Meta:
 		verbose_name_plural='albums'
 
+	def save(self, *args, **kwargs):
+		self.slug =''.join((slugify(self.album_title),slugify(self.artist)))
+		super(Album, self).save(*args, **kwargs)
+
 
 class Song(models.Model):
 	AUDIO_FILE_TYPES = [('wav','wav'),( 'mp3','mp3'), ('ogg','ogg')]
-	album=models.ForeignKey(Album,on_delete=models.CASCADE)
+	album=models.ForeignKey(Album, related_name='albums',on_delete=models.CASCADE)
 	file_type=models.FileField(max_length=100,choices=AUDIO_FILE_TYPES)
 	song_title=models.CharField(max_length=120)
-	slug = models.SlugField(max_length=25, blank=True)
+	slug = models.SlugField(max_length=25, blank=True, unique=True)
 	is_favorite=models.BooleanField(default=False)
 	updated  = models.DateTimeField(auto_now=True,auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False,auto_now_add=True)
@@ -45,19 +49,19 @@ class Song(models.Model):
 		super(Song, self).save(*args, **kwargs)
 
 	def ge_absolute_url(self):
-		return reverse('song_list',kwargs={'slug': self.slug})
+		return reverse('musics:songs',kwargs={'slug': self.slug})
 
 
-def create_slug(instance,new_slug=None):
-	slug=slugify(instance.album_title)	
-	qs=Album.objects.filter(slug=slug).order_by("-id")
-	if new_slug is not None:
-		slug=new_slug
-	exists =qs.exists()
-	if exists:
-		new_slug="%s-%s" %(slug,qs.first().id)
-		return create_slug(instance,new_slug=new_slug)
-	return slug
+# def create_slug(instance,new_slug=None):
+# 	slug=slugify(instance.album_title)	
+# 	qs=Album.objects.filter(slug=slug).order_by("-id")
+# 	if new_slug is not None:
+# 		slug=new_slug
+# 	exists =qs.exists()
+# 	if exists:
+# 		new_slug="%s-%s" %(slug,qs.first().id)
+# 		return create_slug(instance,new_slug=new_slug)
+# 	return slug
 
 
 def pre_save_reciever(sender, instance,*args,**kwargs):
@@ -65,7 +69,7 @@ def pre_save_reciever(sender, instance,*args,**kwargs):
 		instance.slug =create_slug(instance)
 
 pre_save.connect(pre_save_reciever,sender=Album)
-# pre_save.connect(pre_save_reciever,sender=Song)
+pre_save.connect(pre_save_reciever,sender=Song)
 
 
 

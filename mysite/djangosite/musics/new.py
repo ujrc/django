@@ -6,20 +6,28 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View, ListView,DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView,DeleteView
 
-from .forms import UserForm 
+from .forms import UserForm
 from .models import Album,Song
 
 
-
-class SearchMixin(object):
+class RestrictToOwnerMixin(LoginRequiredMixin):
 	def get_queryset(self):
-			queryset_list=super(SearchMixin,self).get_queryset()
+		return self.model.objects.filter(user=self.request.user)
+
+
+class HomeView(RestrictToOwnerMixin,ListView):
+	model=Album
+	template_name='musics/home.html'
+	paginate_by = 10
+
+	def get_queryset(self):
+			queryset_list=super(HomeView,self).get_queryset()
 			query = self.request.GET.get("q")
 			if query:
 				qs=queryset_list.filter(
@@ -30,33 +38,15 @@ class SearchMixin(object):
 				return queryset_list
 
 
-# class RestrictToOwnerMixin(LoginRequiredMixin):
-# 	def get_queryset(self):
-# 		return self.model.objects.filter(user=self.request.user)
-
-
-class HomeView(LoginRequiredMixin,SearchMixin,ListView):
-	model=Album
-	template_name='musics/home.html'
-	context_object_name='albums'
-	paginate_by = 10
-
-	def get_queryset(self):
-		qs= Album.objects.filter(user=self.request.user)
-		return qs
-
-class AlbumDetailView(LoginRequiredMixin,DetailView):
+class DetailView(DetailView):
 	model=Album
 	template_name ='musics/detail.html'
 
 
-class AlbumCreate(LoginRequiredMixin,CreateView):
+class AlbumCreate(CreateView):
 	model =Album
 	fields=['artist','album_title','genre','album_logo']
 
-	def get_success_url(self):
-		return reverse_lazy('musics:home')
-	
 
 class AlbumUpdate(LoginRequiredMixin,UpdateView):
 	model =Album
@@ -66,12 +56,11 @@ class AlbumUpdate(LoginRequiredMixin,UpdateView):
 class AlbumDeleteView(LoginRequiredMixin,DeleteView):
 	model =Album
 	success_url=reverse_lazy('musics:home')
-	# success_message = " Thing was deleted successfully."
-	# template_name='object_confir'
+	success_message = " Thing was deleted successfully."
 
-	# def delete_album(self, request,* args ,**kwargs):
-	# 	messages.success(self.request,self.success_message)
-	# 	return super(AlbumDeleteView,self).delete_album(request,*args,**kwargs)
+	def delete_album(self, request,* args ,**kwargs):
+		messages.success(self.request,self.success_message)
+		return super(AlbumDeleteView,self).delete_album(request,*args,**kwargs)
 
 
 class UserFormView(View):
@@ -103,9 +92,13 @@ class UserFormView(View):
 		return render(request,self.template_name,{'form':form})
 
 
-class SongListView(LoginRequiredMixin,ListView):
+class SongListView(RestrictToOwnerMixin,ListView):
 	model=Song
 	template_name='musics/detail.html'
+
+    def get_queryset(self):
+        album=get_object_or_404(Album,album_title__iexact=self.args[0])
+        return Song.objects.filter(album=album)
 
 
 class SongDetailView(LoginRequiredMixin,DetailView):
@@ -127,4 +120,3 @@ class SongUpdateView(UpdateView):
 class SongDeleteView(DeleteView):
 	model=Song
 	success_url = reverse_lazy('musics:songs')
-
