@@ -1,0 +1,119 @@
+/*body {
+   font-family: Verdana;
+  }
+  h1, h2, h3 {
+   color: darkblue;
+  }*/
+  .rating-circle {
+   height: 2em;
+   width: 2em;
+   border: .1em solid black;
+   border-radius: 1.1em;
+   display: inline-block;
+   margin: 0;
+   padding: .1em;
+  }
+
+  .rating-hover {
+   background-color: yellow;
+  }
+
+  .rating-chosen {
+   background-color: green;
+  }
+
+.dropbtn{
+	background-color:darkblue;
+	color: #ffffff;
+	padding: 5px;
+	border: none;
+	cursor: progress; 
+}
+.dropbtn:hover,.dropbtn:focus{
+	background-color: green;
+	color: yellow;
+}
+.dropdown{
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content{
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+	    }
+	    .show {display:block;}
+/*div{
+	margin-top: .1em;
+}
+.red{
+	color: red;
+}
+.blue{
+	color: blue;
+}*/
+
+
+
+
+/*.menu{
+	background: #202024;
+	left: -285px;
+	height: 100%;
+	position: fixed;
+	width: auto;
+}
+
+.menu ul{
+	border-top: 1px solid #636366;
+	margin: 0;
+	padding: 0;
+}
+
+.menu li{
+	border-bottom: 1px solid #636366;
+	font-family: 'Open Sans',sans-serif;
+	line-height: 45px;
+	padding-bottom: 3px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+.menu a{
+	color: #fff;
+	font-size: 15px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.icon-close{
+	cursor: pointer;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+.icon-menu{
+	color: #fff;
+	cursor: pointer;
+	font-family: 'Open Sans', sans-serif;
+	padding-left: 25px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.icon-menu i{
+	margin-right: 5px;
+}*/
+
+/*Dropdown menus using css, html and Jquery*/
+
+
+

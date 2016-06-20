@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title%}
+	register
+{% endblock title%}
+{% block content%}
+	<div class="module container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="panel panel-defauly">
+					<div class="panel-heading">
+						<h1>Register</h1>
+						<p>Enter your details to create an account:</p>
+					</div>
+					<div class="panel-body">
+						<form action="" method="post">
+							{% csrf_token %}
+							{% include 'courses/template_form.html'%}
+							<p><input class="btn btn-success" type="submit" value="Create my account"></p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content%}

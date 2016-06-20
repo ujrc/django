@@ -1,0 +1,48 @@
+{%load static%}
+<!-- NAVBAR ==========================================-->
+    <div class="navbar-wrapper">
+      <div id='head'<img src="{% static 'img/image.jpg'%}"></div>
+      <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+          <header class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <div class="clearfix"><a class="navbar-brand" href="{% url 'mainpage'%}"><img src="https://exportabroad.s3.amazonaws.com/static/img/globe.png">EXPORT ABROAD, INC.</a> </div>
+          </header>
+          <div id='menu' class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" id='nav'>
+              <li class='active'><a href="{% url 'homepage:home'%}">Home</a></li>
+              <!-- <li><a href="#">Product</a></li> -->
+              <li><a href="/pages/about">About</a></li>
+              <li><a  href="{% url 'contact:contact'%}">Contact</a></li>
+              <li><a href="#">More </a>
+              <ul>
+                <li><a href="{% url 'blog:category_list' %}">Blog</a></li>
+                <li><a href="#">Career</a></li>
+                <li><a href="#">Help</a></li>
+              </ul>
+            </li>
+            <li class="push-right"><a class="glyphicon glyphicon-th-list " href="#">&nbsp;Dashboard </a>
+              <ul>
+              {% if user.is_authenticated%}
+  
+                <li><a class="glyphicon glyphicon-log-out" href="{% url 'myuser:logout'%}">&nbsp;Logout</a></li>
+                 <a class="glyphicon glyphicon-user" href="{% url 'myuser:profile' slug=user.username%}"><b>&nbsp;{{ request.user.username }}</b></a> 
+                {%else%}
+                <li><a class="glyphicon glyphicon-log-in" href="{%url 'myuser:login'%}">&nbsp;Login</a></li>
+                <li><a class="glyphicon glyphicon-lock" href="{%url 'myuser:register'%}">&nbsp;Register</a></li>
+                {%endif%}
+              </ul>
+            </li>
+            <!-- <li><a href="homepage/main.html">Main</a></li> -->
+            
+          </ul>
+          </div><!-- end navbar links -->
+          </div><!-- end container -->
+          </nav> <!-- end navbar -->
+          </div>  <!-- end navbar-wrapper -->

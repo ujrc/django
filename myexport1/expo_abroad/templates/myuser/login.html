@@ -1,0 +1,31 @@
+{%extends '__base.html'%}
+{% block title%}Login{% endblock title%}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if error_message%}
+                        <p><strong>{{error_message}}</strong>
+                            <p class=" label label-danger">
+                                Your username and password didn't match.
+                                Please try again.
+                            </p>
+                        </p>
+                        {%endif%}
+                        <form id='login-form' class="form-horizontal" action="{% url 'myuser:login'%}" method="post">
+                            {% csrf_token%}
+                            {%include 'myuser/form-template.html'%}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

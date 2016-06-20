@@ -29,7 +29,7 @@ class Book(TimestampModel):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('book_detail', kwargs={'slug': self.slug})
+		return reverse('dashboard:book_detail', kwargs={'slug': self.slug})
 
 def pre_save_book(sender,instance,*args,**kwargs):
 	slug=slugify(instance.title)

@@ -1,0 +1,36 @@
+{%extends '__base.html'%}
+{% block title %}Welcome to my blog{% endblock %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<h6><strong>Specific post titles</strong></h6>
+				<p>
+					The posts on this page are for a specific post category.
+				</p>
+			</div>
+			<div class="col-sm-4 col-sm-offset-2">
+				<h6><strong><a href="{% url 'blog:category_list' %}">{{category.title}} Posts</a></strong></h6>
+				{% if category %}
+					<ul style="list-style-type:none">
+						{% for post in category.post_set.all %}				{%if post.slug%}
+							<li><a href="{% url 'blog:post_detail' post.slug%}">{{ post.title }}</a></li>
+						{%endif%}
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>There are no posts.</p>
+				{% endif %}
+			</div>
+			<div class="col-sm-2 pull-right">
+			{% if user.is_authenticated%}
+			<button class="btn btn-primary"><a href="{% url 'blog:category_create'%}">Add Category</a></p></button>
+			
+			<!-- <p><a href="{% url 'blog:category_edit' category.slug %}">Edit Category</a></p>
+			{%else%}
+			<p>Only the owner can change the post.</p>
+			{%endif%} -->
+		</div>
+		</div>
+	</div>
+{% endblock content %}

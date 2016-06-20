@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{%load myuser_extra%}
+{% block title %}
+	Edit "{{ course.name }}"
+{% endblock %}
+{% block content %}
+	<h1>Edit "{{ course.name }}"</h1>
+	<div class="module container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				
+				<h2>Course modules</h2>
+				<form action="" method="post">
+					{% csrf_token %}
+					{{ formset.as_p}}
+					{{ formset.management_form }} <br>
+					<input class="btn btn-success" type="submit" class="button" value="Save modules">
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

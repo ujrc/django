@@ -1,0 +1,28 @@
+{% extends "__base.html" %}
+{% block content %}
+	<h2>Welcome to Educational blog</h2>
+	
+		<div class="col-sm-3 col-md-2 ">
+			<ul class="nav nav-pills nav-stacked h-scroll">
+				<li class="active"><a href="#">Categories <span class="sr-only">(current)</span></a></li>
+				
+				{% for category in category_list %}
+					<li><a href="{% url 'blog:category_detail' category.slug%}">{{ category.title }}</a></li>
+				{% endfor %}
+				
+				<li><a href="">Analytics</a></li>
+				<li><a href="#">Export</a></li>
+			</ul>
+		</div>
+		<div class="col-sm-5 col-sm-offset-1 jumbotron">
+			<p>An Educational blog is a blog created for educational purposes. They archive and support student and teacher learning by facilitating reflection, questioning by self and others, collaboration and by providing contexts for engaging in higher-order thinking. Edublogs proliferated when blogging architecture became more simplified and teachers perceived the instructional potential of blogs as an online resource<a href="https://en.wikipedia.org/wiki/Edublog">more..</a>.</p>
+			<p>This blog mainly focus on technological skills.</p>
+			<p>The use of blogs has become popular in education institutions including public schools and colleges.Blogs can be useful tools for sharing information and tips among co-workers, providing information for students, or keeping in contact with parents. Common examples include blogs written by or for teachers, blogs maintained for the purpose of classroom instruction, or blogs written about educational policy. Educators who blog are sometimes called edubloggers [<a href="https://en.wikipedia.org/wiki/Edublog">more</a>].</p>
+		</div>
+		<div class="col-sm-2 pull-right">
+			{% if user.is_authenticated %}
+				<button class="btn btn-primary"><a href="{% url 'blog:category_create'%}">Add Category</a></p></button>
+			{% endif %}
+		</div>
+
+	{% endblock %}

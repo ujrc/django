@@ -1,0 +1,38 @@
+{%extends '__base.html'%}
+{% block title %}Welcome to my blog{% endblock %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<h6><strong>Specific post titles</strong></h6>
+				<p>
+					The posts on this page are for a specific post category.
+				</p>
+			</div>
+			<div class="col-sm-6">
+				{% if category.slug %}
+				<h6><strong><a href="{% url 'blog:category_list' %}">{{category.title}} Posts</a></strong>&nbsp;<span class="btn-group btn-group-sm" role="group"><button class="btn btn-primary btn-sm"><a href="{% url 'blog:category_edit' category.slug%}">Edit Category</a></button><button class="btn btn-primary btn-sm"><a href="{% url 'blog:category_delete' category.slug%}">Detete Category</a></button></span></h6>
+				<p>{{category.description}}</p>
+				{%endif%}
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>Posts</h4>
+					</div>
+					{% if category %}
+						<ul class="list-group">
+							{% for post in category.post_set.all %}
+								<li class="list-group-item"><a href="{% url 'blog:post_detail' post.slug%}">{{ post.title }}</a></li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						<p>There are no posts.</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock content %}

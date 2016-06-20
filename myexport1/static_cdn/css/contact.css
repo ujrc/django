@@ -1,0 +1,83 @@
+ fieldset, input, textarea {
+	margin: 0; padding: 0; border: 0; outline: none;
+}
+.form-contact{
+	width: 100%;
+	margin: 50px auto;
+	padding:60px 30px;
+	background: lightblue; border: 1px solid #e1e1e1;
+	-moz-box-shadow:0px 0px 8px #444;
+	-webkit-box-shadow:0px 0px 8px #4444;
+	-moz-border-radius: 10px;
+	-webkit-border-radius:10px;
+	border-radius: 20px;
+
+}
+.contact-address{
+	/*background-color: #006699;*/
+	border-radius: 10px;
+	color: #001D2C;
+	text-shadow:0px 1px 0px #f2f2f2;
+	font-size: 16px; 
+	 position: relative;
+}
+.form-contact label{
+	float: left;
+	clear: left;
+	margin: 8px 15px 0 0;
+	width: 100px;
+	font-size: 16px;
+	text-shadow:0px 1px 0px #fffBBB;
+
+}
+.form-contact input, textarea{
+	width: 310px;
+	padding: 5px 10px 0 10px;
+	background:  #728eaa;
+	background:-moz-linear-gradient(top, #8FCCFF 0%, ##99CCFF 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8FCCFF), color-stop(10%,#99CCFF)); /* webkit */
+	border-radius: 5px;
+	text-shadow:0px 1px 0px black;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	ont-family: Verdana,sans-serif,Times; font-size: 16px; text-shadow: 0px 1px 0px #fffBBB; 
+
+}
+
+.form-contact input{
+	height: 35px;
+}
+
+.form-contact textarea{
+	height: 150px;
+}
+	input::-webkit-input-placeholder  {
+    	color: black; text-shadow: 0px -1px 0px #38506b; 
+	}
+	input:-moz-placeholder {
+	    color: black; text-shadow: 0px -1px 0px #38506b; 
+	}
+textarea::-webkit-input-placeholder  {
+    	color: black; text-shadow: 0px -1px 0px #38506b;  
+	}
+input textarea:-moz-placeholder {
+	    color: black; text-shadow: 0px -1px 0px #38506b; 
+	}
+
+input:focus, input:hover, textarea:focus ,textarea:hover{
+	background: #729ebb;
+	background: -moz-linear-gradient(top, #558099 0%, #729ebb 20%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#558099), color-stop(20%,#729ebb)); /* webkit */
+}
+
+.btn-primary{background-color: #006699;}
+.btn-primary:hover,.btn-primary:focus{
+	background-color: green;
+}
+
+#message{
+font-size: 15px;
+color: darkred;
+text-decoration: bold;
+text-align: center;
+}

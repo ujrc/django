@@ -1,0 +1,52 @@
+{% extends "__base.html" %}
+{% load static%}
+{% load avatar_tags %}
+{% block content %}
+	<div class="container">
+		<div class="row">
+			{% if object.username == user.username %}
+				<h2>{{ user.username }}'s Profile</h2>
+				<div class="col-xs-6 col-xs-offset-3">
+					{% if user.userprofile %}
+						<div>
+							<label for="username"><b>Username: </b></label>
+							{{ user.username }} <br>
+							<label for="first_name"><b>First Name: </b></label>
+							{{user.first_name }} <br>
+							<label for="last_name"><b>Last Name: </b></label>
+							{{ user.last_name}} <br>
+							<b>Bio:</b>
+							{{ user.userprofile.biography }} <br>
+							<b>Birthdate:</b>
+							{{user.userprofile.birthdate}} <br>
+							{% if user.userprofile.birthdate %}
+								<b>Age:</b>
+								{{user.userprofile.age}} <br>
+								{%else%}
+								{%endif%}
+								{%for address in user.userprofile.address_set.all %}
+								<b>Street Address:</b>
+								{{address.street_adress1}} <br>
+								<b>city:</b>
+								{{address.city}} <br>
+								<b>State/Province:</b>
+								{{address.state}} <br>
+								{% endfor%}
+							</div>
+						{% endif %}
+					</div>
+					<div class="col-sm-3">
+						<span ><a href="{%url 'myuser:edit_profile'%}">Edit profile</a>
+					</span>
+
+			{% if user.is_authenticated%}
+					
+				
+					<div class="img-responsive img-circle">{% avatar user 65 %}</div>
+					{%endif%}
+					 <p> <a href="{% url 'avatar_change' %}">Change your avatar</a></p> 
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends '__base.html'%}
+{% block content %}
+    
+    <div class="container">
+        {% if post %}
+            <ul class="list-group"> <span><a href="{% url 'blog:post_update' post.slug %}">Edit post</a></span>
+        </ul>
+        <ul class="list-group"> <span><a href="{% url 'blog:post_delete' post.slug %}">Delete post</a></span>
+    </ul>
+    <ul style="list-style-type:none;">
+        <li><h3>{{ post.title }} <a href="{% url 'blog:category_list'%}" class="glyphicon glyphicon-step-backward"></a></h3></li>
+        <li><p>{{post.content}}</p></li>
+        <li></li>
+        
+    </ul>
+    {%endif%}
+</div>
+{% endblock %}

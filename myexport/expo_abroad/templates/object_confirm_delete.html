@@ -1,0 +1,10 @@
+{% extends '__base.html'%}
+{% block title %}Detele {{object}}{% endblock title %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm" />
+    <button class="btn btn-primary btn-sm" type="submit"><a href="{{ object.get_absolute_url }}">No Cancel</a></button> </div>
+    <!-- <a href="{#% url '{{app_name}}:{{object}}_list' %#}">Cancel</a> -->
+</form>
+{% endblock content %}

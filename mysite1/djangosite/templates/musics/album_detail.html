@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{% load staticfiles%}
+{% block head_title%}Album Detail{% endblock head_title%}
+{% block content%}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="thumbnail text-align-center">
+				{% if album.album_logo %}
+					<img src="{{album.album_logo.url}}" id="logo" style="width:250px; height: 180px;" alt="Album logo">
+				{% else %}
+					<img src="{% static 'musics/img/guitar.jpg'%}" style="width:250px; height: 180px;" alt="Album logo">
+					{%endif%}
+					<h1>{{album.album_title}}</h1>
+					<h2>{{album.artist}} </h2>
+				</div>
+			</div>
+			<div class="col-sm-8 col-md-9">
+		{% for song in album.song_set.all%}
+		<ol>
+		<li> <a href="{% url 'musics:song_detail' album.slug song.slug_song %} ">{{ song.song_title }}</a></li>
+		</ol>
+
+		<h3>No Song associated with this album</h3>
+		{% endfor %}
+		</div>
+		</div>
+		</div>
+	{% endblock content%}

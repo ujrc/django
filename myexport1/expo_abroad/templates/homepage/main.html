@@ -1,0 +1,43 @@
+{% extends "__base.html" %}
+{%load static %}
+{%block extra_css%}<link rel="stylesheet" type="text/css" href="{% static 'css/menu.css'%} "> {%endblock%}
+ {% block content %}
+ <div id='index' class="conatiner">
+   <div class="row">
+   	<div class="col-sm-2">
+</div>
+
+   	<div class="col-sm-7">
+   	<center>
+   		<section id="myCarousel" class="carousel slide" data-ride='carousel' style='max-width:800px;max-height:1000px'>
+      <ol class='carousel-indicators'>
+      	<li data-target="#myCarousel" data-slide-to="0" class='active'></li>
+      	<li data-target="#myCarousel" data-slide-to="1"></li>
+      </ol>
+      <div class='carousel-inner'>
+      	<figure class='item active'>
+      		<img src="{% static 'img/logo-globe.jpg'%}" alt='glob map'>
+         <figcaption class='carousel-caption'>
+         <h1> WELCOME TO EXPORT ABROAD </h1>
+		</figcaption>
+		</figure>
+		<figure class='item'>
+      		<!-- <img src="http://www.gto.org.tr/proje/upload/slayt/dunya-936021_w610_h360.jpg" alt='international'> -->
+            <img src="{% static 'img/Madison_Wisconsin.jpg'%}" alt='international'>
+         <figcaption class='carousel-caption'>
+        <h1>Tools to kickstart and manage your international growth.</h1>
+   		<p>Global Sales Leads, Data, And Customer Management All In One Spot. 
+		Export Abroad Is Your Business's Global Dashboard.</p>
+		</figcaption>
+		</figure>
+		</div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+		</section>	
+      </center>
+
+  {%endblock%}

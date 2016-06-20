@@ -101,6 +101,7 @@ class BookDetail(SuccessMessageMixin,ModelFormMixin,MultipleObjectMixin,DetailVi
 	
 class BookListView(ListView):
 	model=Book
+	
 
 	def get_queryset(self,*args,**kwargs):
 		qs=super(BookListView,self).get_queryset(*args,**kwargs).order_by('-timestamp')

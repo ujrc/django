@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse top-static" >
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="">BookStore</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="">Home</a></li>
+			<li><a href="">Contact</a></li>
+			<li><a href="{% url 'about'%}">About</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+		{%if user.is_anonymous%}
+			<li><a href=""><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			<li><a href=""><span class="glyphicon glyphicon-user"></span>Register</a></li>
+			{%else%}
+		<li><a href="{% url 'dashboard:book_list'%}">Books</a></li>
+		<li><a href=""> <span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+		{%endif%}
+		</ul>
+	</div>	
+</nav>

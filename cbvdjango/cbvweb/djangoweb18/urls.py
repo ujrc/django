@@ -21,12 +21,7 @@ from django.contrib import admin
 from django.views.generic.base import TemplateView
 from newsletter import views as newsletter_view
 from . import views
-
-
-from dashboard.views import (
-    BookListView, DashboardTemplateView, 
-    MyView, BookDetail,BookCreateView ,
-    BookUpdateView,BookDeleteView)
+from dashboard import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -34,13 +29,9 @@ urlpatterns = [
     url(r'^contact/$',newsletter_view.contact,name='contact'),
     # url(r'^about/$',views.about,name='about'),
 
-    url(r'^book/create/$',BookCreateView.as_view(),name='book_create'), 
-    url(r'^book/$',BookListView.as_view(),name='book_list'),
-    url(r'^book/(?P<slug>[-\w]+)/$',BookDetail.as_view(),name='book_detail'),
-    url(r'^book/(?P<slug>[-\w]+)/update/$',BookUpdateView.as_view(),name='book_update'),
-    url(r'^book/(?P<slug>[-\w]+)/delete/$',BookDeleteView.as_view(),name='book_delete'),
-    url(r'^about/$',DashboardTemplateView.as_view(),name='about'),
-    url(r'^someview/$',MyView.as_view(template_name='about.html'),name='someview'),
+    url(r'^book/',include('dashboard.urls', namespace='dashboard')),
+    url(r'^about/$',views.DashboardTemplateView.as_view(),name='about'),
+    url(r'^someview/$',views.MyView.as_view(template_name='about.html'),name='someview'),
     url(r'^accounts/',include('registration.backends.default.urls')),
 ]
 

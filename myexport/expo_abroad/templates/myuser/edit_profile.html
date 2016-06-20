@@ -1,0 +1,28 @@
+{% extends "__base.html" %}
+{% block content %}
+	{%if user.username%}
+	<h2>{{ user.username }}'s <a href="{% url 'myuser:profile' slug=user.username %}">Profile</a></h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<form class="form-horizontal" method="post">{% csrf_token %}
+					{% include 'myuser/form-template.html'%}
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary" >Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{%endif%}
+{% endblock %}
+{%block extra_js%} {{block.super}}<script>
+$(function() {
+$("#id_birthdate" ).datepicker({
+	clickInput:true
+});
+});
+	
+</script>
+{%endblock extra_js%}
+

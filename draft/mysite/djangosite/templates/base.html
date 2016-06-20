@@ -1,0 +1,22 @@
+{% load staticfiles%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% block head_css%}
+		{% include 'head_css.html'%}
+		{% endblock head_css%}
+	<title>{% block head_title%}homepage{% endblock head_title%} </title>
+	{% block javascript %}
+	{% include 'js.html'%}
+	{% endblock javascript %}
+</head>
+<body>
+	{% block navbar%}
+		{% include 'navbar.html'%}
+	{% endblock navbar%}
+	{% block content%}
+	{% endblock content%}
+</body>
+</html>
