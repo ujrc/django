@@ -1,1 +1,0 @@
-env_name: expo_abroad
