@@ -4,12 +4,12 @@
 	<head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% block head_css%}
 		{% include 'head_css.html'%}
+		{% block head_css%}
 		{% endblock head_css%}
 	<title>{% block head_title%}homepage{% endblock head_title%} </title>
-	{% block javascript %}
 	{% include 'js.html'%}
+	{% block javascript %}
 	{% endblock javascript %}
 </head>
 <body>

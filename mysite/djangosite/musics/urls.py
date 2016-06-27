@@ -1,23 +1,32 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from .import views
-from django.contrib.auth.views import login,logout
+from django.contrib.auth.views import login, logout
 
+albums_urls = [
+    url(r'^$', views.AlbumListView.as_view(), name='home'),
+    url(r'^(?P<slug>[-\w]+)/$',
+        views.AlbumDetailView.as_view(), name='album_detail'),
+    url(r'^a/create/$', views.AlbumCreate.as_view(), name='album_create'),
+    url(r'^(?P<slug>[-\w]+)/update/$',
+        views.AlbumUpdate.as_view(), name='album_edit'),
+    url(r'^(?P<slug>[-\w]+)/delete/$',
+        views.AlbumDeleteView.as_view(), name='album_delete'),
 
-app_name='musics'
-urlpatterns=[
-url(r'^$',views.HomeView.as_view(),name='home'),
-url(r'^register/$',views.UserFormView.as_view(),name='register'),
-# url(r'^accounts/login/$',login,{'template_name':'registration/login.html'},name='login'),
-# url(r'^accounts/logout/$',logout,{'template_name':'registration/logout.html'},name='logout'),
-url(r'^(?P<slug>[-\w]+)/$',views.AlbumDetailView.as_view(),name='detail'),
-url(r'^album/add/$',views.AlbumCreate.as_view(),name='album-add'),
-url(r'^album/(?P<slug>[-\w]+)/$',views.AlbumUpdate.as_view(),name='album-update'),
-url(r'^album/(?P<slug>[-\w]+)/delete/$',views.AlbumDeleteView.as_view(),name='album-delete'),
-url(r'^songs/$',views.SongListView.as_view(), name='songs'),
-url(r'^songs/(?P<slug>[-\w]+)/$',views.SongDetailView.as_view(), name='detail_song'),
-url(r'^(?P<album_slug>[-\w]+)/create_song/$', views.SongCreateView.as_view(), name='create_song'),
-url(r'^(?P<album_slug>[-\w]+)/update_song/(?P<song_slug>[-\w]+)/$', views.SongUpdateView.as_view(), name='update_song'),
-url(r'^(?P<album_slug>[-\w]+)/delete_song/(?P<song_slug>[-\w]+)/$', views.SongDeleteView.as_view(), name='delete_song'),
-# url(r'^(?P<album_id>[0-9]+)/favorite/$',views.favorite,name='favorite'),
+    # url(r'^(?P<album_id>[0-9]+)/favorite/$',views.favorite,name='favorite'),
+]
+
+songs_urls = [
+    url(r'^$', views.SongListView.as_view(), name='song_list'),
+    url(r'^(?P<slug>[-\w]+)/$',
+        views.SongDetailView.as_view(), name='song_detail'),
+    url(r'^s/create_song/$', views.SongCreateView.as_view(), name='song_create'),
+    url(r'^(?P<slug>[-\w]+)/update_song/(?P<song_slug>[-\w]+)/$',
+        views.SongUpdateView.as_view(), name='song_edit'),
+    url(r'^(?P<slug>[-\w]+)/delete_song/(?P<song_slug>[-\w]+)/$',
+        views.SongDeleteView.as_view(), name='song_delete'), ]
+
+urlpatterns = [
+    url(r'^album/',include(albums_urls, namespace='albums')),
+    url(r'^song/', include(songs_urls, namespace='songs')),
 ]

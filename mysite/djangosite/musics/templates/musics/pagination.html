@@ -1,0 +1,17 @@
+
+{# Now the pagination section #}
+  {% if is_paginated %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous%}
+      <a href="{% url 'musics:albums:home'%}?page={{page_obj.previous_page_number }}{%if request.GET.q%}&q={{request.GET.q}}{% endif%}">Prev</a>
+      {%endif%}
+    </span>
+    <span class="current">
+      Page{{page_obj.number}}&nbsp;of&nbsp;{{page_obj.paginator.num_pages}}
+    </span>
+    {% if page_obj.has_next%}
+    <a href="{% url 'musics:albums:home'%}?page={{page_obj.next_page_number}}{%if request.GET.q%}&q={{request.GET.q}}{% endif%}">Next</a>
+    {%endif%}
+  </div>
+  {% endif %}

@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+{% block head_title%}Register{% endblock head_title%}
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3>Create a New Account</h3>
+				</div>
+				<div class="panel-body">
+					{% if error_message%}
+						<p><strong>{{error_message}}</strong></p>
+						{%endif%}
+						<form class="form-horizontal" action="" method="post">
+							{% csrf_token%}
+							{%include 'accounts/form-template.html'%}
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-success">Submit</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

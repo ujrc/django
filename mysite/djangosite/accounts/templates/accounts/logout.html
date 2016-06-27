@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+	<div class="conatiner">
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<div id="logout_panel" class="panel panel-default">
+					<div class="panel-heading">Logged out!</div>
+					<div class="panel-body">
+						<a href="{% url 'accounts:login'%}">Login</a>
+						<p>No Account ?<a href="{% url 'accounts:register'%}">Signup Now</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

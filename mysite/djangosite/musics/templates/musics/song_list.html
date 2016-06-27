@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+{% load staticfiles%}
+{% block head_title%}Song list{% endblock head_title%}
+{% block content%}
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="list-group">
+				{% for song in songs %}
+					<li class="list-group-item">
+					<h3 class="list-group-item active">{{song.album.album_title}}</h3></li>
+					<p class="list-group-item">{{song.song_title}} by {{song.album.artist}}</p>
+					
+					<br>
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content%}
