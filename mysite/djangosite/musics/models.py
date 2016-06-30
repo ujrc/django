@@ -33,7 +33,7 @@ class Album(models.Model):
 
 class Song(models.Model):
     AUDIO_FILE_TYPES = [('wav', 'wav'), ('mp3', 'mp3'), ('ogg', 'ogg')]
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE,related_name='albums')
     file_type = models.FileField(max_length=100, choices=AUDIO_FILE_TYPES)
     song_title = models.CharField(max_length=120)
     slug = models.SlugField(max_length=25, blank=True, unique=True)
@@ -52,16 +52,16 @@ class Song(models.Model):
         return reverse('musics:song_detail:song_detail', kwargs={'slug': self.slug})
 
 
-def create_slug(instance, new_slug=None):
-    slug = slugify(instance.album_title)
-    qs = Album.objects.filter(slug=slug).order_by("-id")
-    if new_slug is not None:
-        slug = new_slug
-    exists = qs.exists()
-    if exists:
-        new_slug = "%s-%s" % (slug, qs.first().id)
-        return create_slug(instance, new_slug=new_slug)
-    return slug
+# def create_slug(instance, new_slug=None):
+#     slug = slugify(instance.album_title)
+#     qs = Album.objects.filter(slug=slug).order_by("-id")
+#     if new_slug is not None:
+#         slug = new_slug
+#     exists = qs.exists()
+#     if exists:
+#         new_slug = "%s-%s" % (slug, qs.first().id)
+#         return create_slug(instance, new_slug=new_slug)
+#     return slug
 
 
 def pre_save_reciever(sender, instance, *args, **kwargs):

@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
@@ -42,8 +42,17 @@ class AlbumListView(LoginRequiredMixin, SearchMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = Album.objects.filter(user=self.request.user)
-        return qs
+        queryset_list = super(AlbumListView, self).get_queryset()
+        queryset_list=Album.objects.filter(user=self.request.user)
+        query = self.request.GET.get("q")
+        if query:
+            qs = queryset_list.filter(
+                Q(album_title__contains=query) |
+                Q(artist__contains=query))
+            return qs
+        else:
+            return queryset_list
+    
 
 
 class AlbumDetailView(LoginRequiredMixin, DetailView):
@@ -54,11 +63,11 @@ class AlbumDetailView(LoginRequiredMixin, DetailView):
     #     self.object = self.get_object(queryset=Album.objects.all())
     #     return super(AlbumDetailView, self).get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(AlbumDetailView, self).get_context_data(**kwargs)
-        context['album'] = self.object
-        context.update({'songs': Song.objects.all()})
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(AlbumDetailView, self).get_context_data(**kwargs)
+    #     context['album'] = self.object
+    #     context.update({'songs': Song.objects.all()})
+    #     return context
 
 
 class AlbumCreate(LoginRequiredMixin, CreateView):
@@ -68,7 +77,7 @@ class AlbumCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         album = form.save(commit=False)
         album.user = self.request.user
-        # article.save()  # This is redundant, see comments.
+        album.save()  # This is redundant, see comments.
         return super(AlbumCreate, self).form_valid(form)
 
     def get_success_url(self):
@@ -94,30 +103,39 @@ class AlbumDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class SongListView(LoginRequiredMixin, ListView):
-    queryset = Song.objects.order_by('song_title')
+    queryset = Song.objects.all().order_by('-updated')[:5]
     context_object_name = 'songs'
+    paginate_by = 10
     # template_name = 'musics/song_list.html'
 
 
 class SongDetailView(LoginRequiredMixin, DetailView):
     model = Song
     template_name = 'musics/create_song.html'
-    context_object_name = 'songs'
+    # context_object_name = 'songs'
 
     def get_queryset(self):
+        album=get_object_or_404(Album)
         return self.model.objects.filter(album__user=self.request.user)
 
 
-class SongCreateView(CreateView):
+class SongCreateView(LoginRequiredMixin,CreateView):
     model = Song
-
-    fields = ['album','song_title', 'file_type']
+    fields = ['song_title', 'file_type']
 
     def get_success_url(self):
         return reverse('musics:songs:song_list')
 
+    def form_valid(self, form):
+        song = form.save(commit=False)
+        song.album__user = self.request.user
+        song.save()  # This is redundant, see comments.
+        return super(SongCreateView, self).form_valid(form)
+
+
 class SongUpdateView(UpdateView):
     model = Song
+    fields = ['song_title', 'file_type']
 
 
 class SongDeleteView(DeleteView):

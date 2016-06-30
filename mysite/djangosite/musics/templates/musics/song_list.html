@@ -13,7 +13,10 @@
 					
 					<br>
 					{%endfor%}
+					
 				</div>
+				<p><a href="{{album.get_absolute_url }}">Back to list</a></p>
+				{% include 'musics/pagination.html'%}
 			</div>
 		</div>
 	</div>
