@@ -3,16 +3,17 @@
   action="{%if comm.uuid%}{% url 'comm_update' comm.uuid%}{%else%}{% url 'comm_new'%}{%endif%} "
   method="post">
   {% csrf_token %}
-  <p>{{ form.subject }}</p>
+  {{form}}
+  
   <div id="comm-form-internals">
     <p>{{ form.subject.errors }}</p>
-    <p>{{ form.notes }}</p>
+   
     <p>{{ form.notes.errors }}</p>
     <div class="div comm-form">
       <div>
         <div>
-          <p>{{ form.kind }}</p>
-          <p>{{ form.date }}</p>
+          
+        
           <p class="comm-submit-td">
             <input class="btn btn-success comm-submit"
           type="submit" value="SAVE"/></p>

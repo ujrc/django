@@ -8,11 +8,12 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 
 
+from .models import Account
+from .forms import AccountForm
 from communications.forms import CommunicationForm
 from communications.models import Communication
 from contacts.models import Contact
-from .forms import AccountForm
-from .models import Account
+from contacts.forms import ContactForm
 
 @login_required
 def account_detail(request,uuid):
@@ -21,6 +22,7 @@ def account_detail(request,uuid):
 		return httpResponseForbidden()
 
 	contacts=Contact.objects.filter(account=account)
+	contact_form=ContactForm()
 
 	communications=Communication.objects.filter(account=account).order_by('-Created_on')
 	
@@ -31,6 +33,7 @@ def account_detail(request,uuid):
 	'contacts': contacts,
 	'communications': communications,
 	'form':form,
+	'form':contact_form,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)

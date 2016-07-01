@@ -34,4 +34,4 @@ class Communication(models.Model):
 
 	@models.permalink
 	def get_delete_url(self):
-		return 'comm_delete',[self.uuid]
+		return 'comm_delete',[self.id]

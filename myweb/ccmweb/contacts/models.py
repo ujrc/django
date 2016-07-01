@@ -23,7 +23,7 @@ class Contact(models.Model):
 
 	@property
 	def full_name(self):
-		return '%s %s' % (self.first_name, self.last_name)
+		return '%s %s' %(self.first_name, self.last_name)
 
 	def __str__(self):
 		return '%s' % self.full_name

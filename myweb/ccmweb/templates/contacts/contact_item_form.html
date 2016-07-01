@@ -17,6 +17,10 @@
 			</div>
 		{% endif %}
 	</div>
-	<input id="id_account" name="account" type="hidden" value"{% if request.GET.account %} {{request.GET.account}} {% else %} {{account.id}} {% endif %}">
+	<input id="id_account" name="account"
+  type="hidden"
+  value="{% if request.GET.account %}
+  {{ request.GET.account }}{% else %}{{ account.id }}{% endif %}"/>
+  <input id="id_owner" name="owner" type="hidden" value="{{ user.username }}"/>
 	<input id="contact-submit" class="btn btn-primary m-r-none" type="submit" value="SAVE">
 </form>

@@ -49,13 +49,13 @@ urlpatterns = [
 
     url(r'^contact/new/$',contacts_view.contact_cru, name='contact_new'),
     url(r'^contact/(?P<uuid>[\w-]+)/',include(contact_urls)),
-    url(r'^contact/(?P<pk>[\w-]+)/delete/$',ContactDelete.as_view(),
+    url(r'^contact/(?P<pk>\d+)/delete/$',ContactDelete.as_view(),
      name='contact_delete'),
 
  # Communication related URLs
     url(r'^comm/new/$',comm_view.comm_cru, name='comm_new'),
     url(r'^comm/(?P<uuid>[\w-]+)/',include(comm_urls)),
-    url(r'^comm/(?P<pk>[\w-]+)/delete/$', CommDelete.as_view(),
+    url(r'^comm/(?P<pk>\d+)/delete/$', CommDelete.as_view(),
      name='comm_delete'),
 
 

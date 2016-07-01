@@ -40,7 +40,8 @@
 					{% include 'communications/comm_item_view.html' %}
 				{% endfor %}
 			</ul>
-			
+			{# New Communication Link #}
+			<a id="new-comm" class="btn btn-link new-comm" href="{% url 'comm_new'%}?account={{ account.id }}">New Communications</a>
 		</div>
 	</div>
 </div>
