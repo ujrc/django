@@ -1,0 +1,23 @@
+.panel
+{
+	background-color:#2f6986; 
+	margin-top: 20px;
+}
+.panel-default>.panel-heading {
+    background-color: #2f6986;
+    border-color: #337ab7;
+    text-align: center !important;
+}
+
+.panel-default>.panel-body {
+	background-color:#1C4F6F;
+	padding:30px;
+}
+.panel,
+.panel-default>.panel-heading,
+.panel-default>.panel-body {
+	color: white;
+	border-radius: 10px;
+	border-color:#1C4F6F; 
+	text-align: justify;
+}

@@ -1,0 +1,14 @@
+.edit-account, .al-name, #new-contact,
+ span>a.p-r-none {
+    color: #122486;
+}
+.edit-account:hover, .al-name:hover,
+ #new-contact:hover {
+    color: #080808;
+}
+
+.well{
+	border-style: none;
+	margin-top: 20px;
+	float: left;
+}
