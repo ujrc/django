@@ -1,15 +1,15 @@
-<div class="container">
-<li class="co-item">
-    <h5 class="co-item-h">{{ comm.subject }} </h5>
-    <p class="co-item-date">on {{ comm.date }}</p>
-    <p>{{ comm.notes }}</p>
-    <span>
-        {# Comm Edit URL #}
-        <p><a class="pen comm-control comm-edit"
-        href="{{comm.get_update_url}}?account={{account.id}} ">Edit communication</a></p>
-        {# Comm Delete URL #}
-        <p><a class="cancel comm-control"
-        href="{{ comm.get_delete_url }}?account={{ account.id }}">Delete</a> </p>
-    </span>
+<h4 class="co-item-h"> <label for="id_subject">Subject:</label>&nbsp;{{ comm.subject }} </h5>
+<p class="co-item-date"><label for="id_date">On:</label>&nbsp; {{ comm.date }}</p>
+<p> <label for="id_notes">Notes:</label>{{ comm.notes }}</p>
+<span class="btn-group">
+    {# New Communication Link #}
+    <a id="new-comm" class="btn btn-primary new-comm" href="{% url 'comm_new'%}?account={{ account.id }}">Add Communication</a>
+    {# Comm Edit URL #}
+    <a class="pen comm-control comm-edit btn btn-primary"
+    href="{{comm.get_update_url}}?account={{account.id}} ">Edit</a>
+    {# Comm Delete URL #}
+    <a class="cancel comm-control btn btn-danger"
+    href="{{ comm.get_delete_url }}?account={{ account.id }}">Delete</a>
+</span>
 </li>
 </div>

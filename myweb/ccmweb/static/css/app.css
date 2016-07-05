@@ -10,19 +10,18 @@
 }
 
 body{
-	background-color: #095B84;
-	color:white;
+	background-color:#A4B4B0 ;
+	color:#02091d;
 }
 .container>.navbar-header {
 	
 }
 
-.jumbotron {
-	background-color:#1C4F6F;
-	color: white;
-	text-align: justify;
-	padding:0px 80px;
+.jumbotron{
+	background-color: #a2a9a7;
+	text-align: center;
 }
+
 hr{
 	border-color: #37617B;
 }
@@ -43,10 +42,13 @@ a:focus, a:hover {
 color:#9E999E;
 }
 .sgn-btm{
-	color: #A6DAF5;
+	color: #080abb;
 }
-
 .sgn-btm:hover
 .sgn-btm:focus{
-color:#5B9DBD;
+color:#AE8383;
+}
+
+#about,#contactus,#content-container{
+	min-height: 400px;
 }

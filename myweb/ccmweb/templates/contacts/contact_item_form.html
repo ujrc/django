@@ -3,24 +3,13 @@
 {% url 'contact_new'%}{% endif%}" method="post">
 
 	{% csrf_token %}
-	<div class="contact-div">
-		<div>
-			{{form}}
-		</div>
-		{% if form.errors %}
-			<div>
-				<p>{{form.first_name.errors}}</p>
-				<p>{{form.last_name.errors}}</p>
-				<p>{{form.role.errors}}</p>
-				<p>{{form.phone.errors}}</p>
-				<p>{{form.email.errors}}</p>
-			</div>
-		{% endif %}
-	</div>
+	{% include 'accounts/_fields.html'%}
+	<center>
 	<input id="id_account" name="account"
   type="hidden"
   value="{% if request.GET.account %}
   {{ request.GET.account }}{% else %}{{ account.id }}{% endif %}"/>
   <input id="id_owner" name="owner" type="hidden" value="{{ user.username }}"/>
 	<input id="contact-submit" class="btn btn-primary m-r-none" type="submit" value="SAVE">
+	</center>
 </form>

@@ -3,32 +3,14 @@
   action="{%if comm.uuid%}{% url 'comm_update' comm.uuid%}{%else%}{% url 'comm_new'%}{%endif%} "
   method="post">
   {% csrf_token %}
-  {{form}}
-  
-  <div id="comm-form-internals">
-    <p>{{ form.subject.errors }}</p>
-   
-    <p>{{ form.notes.errors }}</p>
-    <div class="div comm-form">
-      <div>
-        <div>
-          
-        
-          <p class="comm-submit-td">
-            <input class="btn btn-success comm-submit"
-          type="submit" value="SAVE"/></p>
-        </div>
-        <div>
-          <p>{{ form.kind.errors }}</p>
-          <p>{{ form.date.errors }}</td>
-          <p></p>
-        </div>
-      </siv>
-    </div>
-  </div>
+  {% include 'accounts/_fields.html'%}
   <input id="id_account" name="account"
   type="hidden"
   value="{% if request.GET.account %}
   {{ request.GET.account }}{% else %}{{ account.id }}{% endif %}"/>
   <input id="id_owner" name="owner" type="hidden" value="{{ user.username }}"/>
+  <center >
+<input id="gi-form-submit" class="btn btn-primary" type="submit" value="Save">
+<p> {{form.non_field_errors}} </p>
+</center>
 </form>

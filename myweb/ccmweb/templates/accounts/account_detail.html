@@ -1,47 +1,44 @@
 {% extends "base.html"%}
 {%block content%}
-<div id="content-container" class="container p-none jumbotron">
-	<div id="ad-container">
-		<div id="gi-container" class="ad-container">
-			{% include 'accounts/account_item_view.html' %}
-		</div>
-	</div>
-	{# List Contacts #}
-	<div id="cd-container" class="ad-container">
-		<div class="ad-headers">
-			<h4 class="ad-mh m-none">Contacts</h4>
-		</div>
-		<div id="cd-body" class="row">
-			<div id="cd-div" class="contact contact-hover">
-				<p></p>
-				<p>{% for contact in contacts %}
-					{% include 'contacts/contact_item_view.html' %}
-				{% endfor %}</p>
+<div id="content-container" class="container p-none">
+	<div id="ad-container row">
+		<div class="col-sm-7">
+			<div id="gi-container" class="ad-container well">
+				{% include 'accounts/account_item_view.html' %}
+				<a href="{% url 'account_list'%}"">Back to Account list</a>
 			</div>
-			{# New Contact Link #}
-			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contact_new'%}?account={{ account.id }}">New Contact</a>
 		</div>
-	</div>
-	
-	{# List Communications #}
-	<div id="co-container" class="ad-container">
-		<div class="ad-headers">
-			<h4 class="ad-mh m-none">Communications</h4>
-		</div>
-		<div id="co-body" class="ad-container">
-			{# Communications Item Form #}
-			<!-- <div id="co-form-wrapper">
-				{% include 'communications/comm_item_form.html'%}
-			</div> -->
-	
-			{# List of Communications #}
-			<ul id="co-list" class="strip-list col-md-12 p-none">
-				{% for comm in communications %}
-					{% include 'communications/comm_item_view.html' %}
-				{% endfor %}
-			</ul>
-			{# New Communication Link #}
-			<a id="new-comm" class="btn btn-link new-comm" href="{% url 'comm_new'%}?account={{ account.id }}">New Communications</a>
+		
+		{# List Contacts #}
+		<div class="col-sm-5">
+			<div class="col-sm-12">
+				<div id="panel-contact" class=" panel panel-default">
+					<div class="panel-heading">
+						<h3 class="ad-mh m-none">Contacts</h3>
+					</div>
+					<div id="cd-div" class="contact contact-hover panel-body">
+						<p></p>
+						<p>{% for contact in contacts %}
+							{% include 'contacts/contact_item_view.html' %}
+						{% endfor %}</p>
+					</div>
+				</div>
+			</div>
+			{# List Communications #}
+			<hr>
+			<div class="col-sm-12">
+				<div  id="panel-comm" class=" panel panel-default">
+					<div class="panel-heading">
+						<h3 class="ad-mh m-none">Communications</h3>
+					</div>
+					<div id="cd-div" class="panel-body">
+						<p></p>
+						<p>{% for comm in communications %}
+							{% include 'communications/comm_item_view.html' %}
+						{% endfor %}</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

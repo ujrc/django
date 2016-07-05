@@ -20,13 +20,15 @@
 	{% endblock head_meta%}
 	{% block head_css%}
 		{% block head_css_site%}
-			<link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}" media="screen">
-			<link rel="stylesheet" href="{% static "css/app.css"%}" media="screen">
+			<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" media="screen">
+			<link rel="stylesheet" href="{% static 'css/app.css'%}" media="screen">
 		{% endblock head_css_site%}
 	{% block head_css_section %}{% endblock head_css_section %}
 {% block head_css_page %}{% endblock head_css_page %}
 {% endblock head_css%}
-{% block head_style%}{% endblock head_style%}
+{% block head_style%}<link rel="stylesheet" type="text/css" href="{% static 'css/subscribers.css'%}">
+<link rel="stylesheet" href="{% static 'css/accounts.css'%}">
+<link rel="stylesheet" href="{% static 'css/contacts.css'%}">{% endblock head_style%}
 </head>
 <body>
 {% include 'navbar.html'%}
