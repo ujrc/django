@@ -1,0 +1,26 @@
+{% extends '__base.html'%}
+{% load avatar_tags %}
+{% block head_title%} user profile {{block.super}}{% endblock head_title %}
+{% block content %}
+{% if object.username == user.username %}
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-4">
+			<h2>{{ user.username|capfirst }}'s Profile</h2>
+			{% if user.userprofile %}
+				<label for="username">Username:</label> {{ user.username}} 	<br>
+				<label for="first_name">First Name:</label> {{ user.first_name }} <br>
+				<label for="last_name">Last Name:</label>{{ user.last_name}} <br>
+				<label for="birthday">Birth Date:</label> {{user.userprofile.birthday}} <br>
+				<label for="biography">Bio:</label>
+				{{ user.userprofile.biography }} <br>
+				<label for="age">Age:</label> {{user.userprofile.age}} <br>
+				<label for="gender">Gender:</label> {{user.userprofile.gender}} <br>
+		{% endif %}
+		</div>
+		{% avatar user 65 class="img-circle img-responsive" id="user_avatar" %}
+	<div class="col-xs-4">
+		<span><a href="{%url 'accounts:update_profile'%}">Edit profile</a></span>
+	</div>
+</div>
+{% endif%}
+{% endblock content %}

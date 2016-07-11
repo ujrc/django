@@ -1,0 +1,9 @@
+album=Album.objects.get(id=1)
+
+Display all song
+
+album.song_set.all()
+
+create a new object related to album
+album.song_set.create()
+album.song_set.count()

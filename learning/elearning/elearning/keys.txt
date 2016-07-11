@@ -1,0 +1,4 @@
+{'SECRET_KEY':'h)kcw%z-il()riisy3pmn1ty9bt6_ig(()(1os_(sslupi)$n5',
+'db_password':'elearning_password',
+	
+}

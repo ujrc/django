@@ -1,0 +1,27 @@
+{% extends '__base.html'%}
+{% block head_title%} Edit user profile {{block.super}}{% endblock head_title %}
+{% block content %}
+<div class="row">
+		<div class="col-xs-6 col-xs-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading"> <h1>User Profile Edit Form</h1>
+				</div>
+				{%if user.username%}
+				<div class="panel-body">
+
+					<form action="" method="post" role="form" class="form-horizontal">
+					{% csrf_token%}					
+						{% include 'main/_fields.html'%}
+						<center>
+						<div class="form-group">
+							<input class="btn btn-primary" type="submit" name="edit_profile" value="Edit Profile">
+						</div>
+						<p>{{form.non_fields_errors}}</p>
+						</center
+					</form>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock content %}

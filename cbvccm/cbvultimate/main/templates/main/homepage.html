@@ -1,0 +1,53 @@
+{% extends '__base.html'%}
+{% load staticfiles%}
+{% block head_title%} {{block.super}} | homepage{% endblock head_title %}
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-8 col-sm-offset-2">
+                <h1 >Never Miss Another opportunity</h1>
+                <p>
+                    A CCM application that lets you track
+                    all of your customers, meetings, notes,
+                    and plans. Never forget an important
+                    contact or follow up task again.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock jumbotron %}
+{% block content %}
+    {# Hero Section #}
+    {# Main Section #}
+    <div class="container">
+        <h2 class="text-align-center">Why Buy CCM Web?</h2>
+        <div class="col-sm-4">
+            <img class="img-responsive" src="{% static 'main/img/clock.png'%}"/>
+            <h5>Save Time</h5>
+            <p>By tracking your customers in
+                an easy to use application you'll
+                be able to find them faster. Don't
+                waste time searching email, looking
+                at business cards, or looking online -
+            just open CCM Web!</p>
+        </div>
+        <div class="col-sm-4">
+            <img class="img-responsive" src="{%static 'main/img/lightbulb.png' %}" style="width:200;height:300;" />
+            <h5>Stay Current</h5>
+            <p>Keeping track of customer details
+                is a critical part of serving the customer
+                right. Make sure you know what they want and when
+                they want it. Use CCM Web to track all customer
+            communications.</p>
+        </div>
+        <div class="col-sm-4 ">
+            <img class="img-responsive" src="{% static 'main/img/dollar.png' %}" style="width: 100; height: 150;" />
+            <h5>Win Business</h5>
+            <p>By tracking customers and staying up
+                to date on their requirements you'll be
+                in a better position to sell your products
+            or services. You win and so does the customer.</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends '__base.html'%}
+{% block head_title%} Add client {{block.super}}{% endblock head_title %}
+{% block content %}
+<div class="row">
+	<div class="col-xs-8 col-xs-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-heading"> <h1>{{title}}</h1>
+			</div>
+			<div class="panel-body">
+				<form action="" method="post" role="form" class="form-horizontal">
+					{% csrf_token%}
+					{% include 'main/_fields.html'%}
+					<center>
+					<div class="form-group">
+						<input id="id_client" name="client" type="hidden"	value="{% if request.GET.client %}
+						{{ request.GET.client }}{% else %}{{ client.id }}{% endif %}"/>
+						<input id="id_owner" name="owner" type="hidden" value="{{ user.username }}"/>
+						<input class="btn btn-primary" type="submit" name="create" value="{{input}}">
+					</div>
+					<p>{{form.non_fields_errors}}</p>
+					</center
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends '__base.html'%}
+{% block head_title%} {{block.super}} | Login {% endblock head_title %}
+{% block content %}
+<div class="row">
+	<div class="col-xs-6 col-xs-offset-3">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h1>Login</h1></div>
+			<div class="panel-body">
+				{% if form.errors %}
+					<p>Your username and password didn't match. Please try again.</p>
+				{% endif %}
+				<form action="{% url 'accounts:login'%}" method="post" role="form" class="form-horizontal">
+					{% csrf_token%}
+					{% include 'main/_fields.html'%}
+					<center>
+					<div class="form-group">
+						<input class="btn btn-primary" type="submit" value="Login">
+						<input type="hidden" name="next" value="/main/">
+						<input type="hidden" value="/change_password/">
+					</div>
+					<p>{{form.non_fields_errors}}</p>
+					</center>
+				<a href="{% url 'accounts:password_change'%}">Change password</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

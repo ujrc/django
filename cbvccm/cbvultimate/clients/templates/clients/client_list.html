@@ -1,0 +1,31 @@
+{% extends '__base.html'%}
+{% block head_title%} clients {{block.super}}{% endblock head_title %}
+{% block headline%}Clients list{% endblock headline%}
+{% block content%}
+<div class="row">
+<div class="col-xs-8 col-xs-offset-2">
+<div>
+	<h3 class="ad-mh">Client  List
+	{# Add Account Link #}
+	<span  id="new-client" class="pull-right">
+		<a class="glyphicon glyphicon-plus" href="{% url 'clients:client_new'%}" class="btn btn-link ">Add New Client</a>
+	</span>
+	</h3>
+	{# Account Search Form #}
+	<form action="{%url 'clients:client_list'%}" method="get">
+		<input id="all-search" type="text" name="client" value="{{ request.GET.client }}" class="form-control">
+		<input type="submit" value="Search" class="btn btn-success">
+	</form>
+</div>
+<ul class="list-group">
+ {% for client in clients %}
+		<li class="list-group-item">
+			<a href="{{client.get_absolute_url}}"><h4 class="al-name">{{ client.name }}</h4></a>
+			<span class="al-created">created by &nbsp;{{client.owner|capfirst}}&nbsp;{{ client.created_on|timesince }}</span>
+		</li>
+	{% endfor %}
+</ul>
+</div>
+</div>
+{%include 'clients/pagination.html'%}
+{%endblock content%}

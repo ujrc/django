@@ -1,0 +1,28 @@
+{% extends "__base.html"%}
+{%block content%}
+{# Client Detail#}
+<div class="row">
+<div class="col-xs-6">
+<div class="well">
+<h1 class="text-align-cnter">Client Detail</h1>
+	<span class=" btn-group pull-right"><a class="btn btn-primary" href="{{client.get_update_url}}">Edit client</a>
+	<a class="btn btn-danger" href="{{client.get_delete_url}}">Delete</a></span>
+	{% include 'clients/client_item_view.html' %}
+	<a href="{% url 'clients:client_list'%}"">Back to Client list</a>
+</div>
+</div>
+<div class="col-xs-3">
+{# Contact List#}
+	<h1><a href="{%url 'contacts:contact_list'%}">Contact List</a></h1>
+	{% for contact in client.contacts.all%}
+	{% include 'contacts/contact_detail.html'%}
+{% endfor%}
+	{# New Contact Link #}
+			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contacts:contact_new'%}?client={{ client.id }}">New Contact</a>
+</div>
+<div class="col-xs-3">
+	<h1>Communications</h1>
+</div>
+
+</div>
+{%endblock content%}

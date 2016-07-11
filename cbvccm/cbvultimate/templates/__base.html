@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html charset=utf-8">
+		<meta http-equiv="Content-Language" value="en-US" >
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" >
+		<title>{% block head_title%}CBVULTIMATE {% endblock head_title%}</title>
+		{% block extra_css%}
+		{% endblock extra_css%}
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/home.css'%}">
+	</head>
+	<body>
+		
+			{% include 'navbar.html'%}
+			<div class="container main">
+			{% block jumbotron %}
+			{% endblock jumbotron %}
+			<h1 class="text-align-center">
+			{% block headline%}
+			{% endblock headline%}				
+			</h1>
+			{% block content %}
+			{% endblock content %}
+			{% block footer%}
+			{% endblock footer%}
+			</div>
+			<footer>
+				<div id="footer" class="container-fuild">
+					<ul class="nav navbar-nav navbar-left">
+						<li><a href="{% url 'main:copyright'%}">&copy;Copyright 2016!</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated%}
+						<li><a href="{% url 'main:mainpage'%}">Home</a></li>
+						{% endif%}
+						<li><a href="{% url 'main:contactus'%}">Contact Us</a></li>
+						<li><a href="{% url 'main:privacy'%}">Privacy</a></li>
+						<li><a href="{% url 'main:terms'%}">Terms</a></li>
+					</ul>
+				</div>
+			</footer>
+		<script>
+		{%block extra_js%}
+		//
+	{% endblock extra_js%}
+	$(document).ready({
+	$('.collapse').collapse();
+	});
+	</script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+		
+	</script>
+</body>
+</html>

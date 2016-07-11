@@ -1,0 +1,29 @@
+{% extends '__base.html'%}
+{% load staticfiles%}
+{% block head_title%}
+{{block.super}} | home
+{% endblock head_title%}
+<div class="container">
+    {% block jumbotron %}
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-8 col-sm-offset-2">
+                    <h1 >Never Miss Another opportunity</h1>
+                    <p>
+                        A CCM application that lets you track
+                        all of your customers, meetings, notes,
+                        and plans. Never forget an important
+                        contact or follow up task again.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endblock jumbotron %}
+    
+</div>
+{% block content%}
+    <div class="container">
+        {# Second Signup Link #}
+        <a href="{% url 'accounts:register'%}" class=" sgn-btm ">SIGN UP FOR ONLY $20/MONTH</a>
+    </div>
+{% endblock%}
