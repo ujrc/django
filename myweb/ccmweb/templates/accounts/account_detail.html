@@ -1,45 +1,66 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @ujrc
+ Unwatch 1
+  Star 0
+ Fork 0 ujrc/djangopro
+ Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs  Settings
+Tree: eae2111ade Find file Copy pathdjangopro/myweb/ccmweb/templates/accounts/account_detail.html
+eae2111  8 days ago
+@ujrc ujrc modified contact_form_view, comm model,views and ccmweb.urls to remov…
+1 contributor
+RawBlameHistory     48 lines (46 sloc)  1.49 KB
 {% extends "base.html"%}
 {%block content%}
-<div id="content-container" class="container p-none">
-	<div id="ad-container row">
-		<div class="col-sm-7">
-			<div id="gi-container" class="ad-container well">
-				{% include 'accounts/account_item_view.html' %}
-				<a href="{% url 'account_list'%}"">Back to Account list</a>
-			</div>
+<div id="content-container" class="container p-none jumbotron">
+	<div id="ad-container">
+		<div id="gi-container" class="ad-container">
+			{% include 'accounts/account_item_view.html' %}
 		</div>
-		
-		{# List Contacts #}
-		<div class="col-sm-5">
-			<div class="col-sm-12">
-				<div id="panel-contact" class=" panel panel-default">
-					<div class="panel-heading">
-						<h3 class="ad-mh m-none">Contacts</h3>
-					</div>
-					<div id="cd-div" class="contact contact-hover panel-body">
-						<p></p>
-						<p>{% for contact in contacts %}
-							{% include 'contacts/contact_item_view.html' %}
-						{% endfor %}</p>
-					</div>
-				</div>
+	</div>
+	{# List Contacts #}
+	<div id="cd-container" class="ad-container">
+		<div class="ad-headers">
+			<h4 class="ad-mh m-none">Contacts</h4>
+		</div>
+		<div id="cd-body" class="row">
+			<div id="cd-div" class="contact contact-hover">
+				<p></p>
+				<p>{% for contact in contacts %}
+					{% include 'contacts/contact_item_view.html' %}
+				{% endfor %}</p>
 			</div>
-			{# List Communications #}
-			<hr>
-			<div class="col-sm-12">
-				<div  id="panel-comm" class=" panel panel-default">
-					<div class="panel-heading">
-						<h3 class="ad-mh m-none">Communications</h3>
-					</div>
-					<div id="cd-div" class="panel-body">
-						<p></p>
-						<p>{% for comm in communications %}
-							{% include 'communications/comm_item_view.html' %}
-						{% endfor %}</p>
-					</div>
-				</div>
-			</div>
+			{# New Contact Link #}
+			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contact_new'%}?account={{ account.id }}">New Contact</a>
+		</div>
+	</div>
+	
+	{# List Communications #}
+	<div id="co-container" class="ad-container">
+		<div class="ad-headers">
+			<h4 class="ad-mh m-none">Communications</h4>
+		</div>
+		<div id="co-body" class="ad-container">
+			{# Communications Item Form #}
+			<!-- <div id="co-form-wrapper">
+				{% include 'communications/comm_item_form.html'%}
+			</div> -->
+	
+			{# List of Communications #}
+			<ul id="co-list" class="strip-list col-md-12 p-none">
+				{% for comm in communications %}
+					{% include 'communications/comm_item_view.html' %}
+				{% endfor %}
+			</ul>
+			{# New Communication Link #}
+			<a id="new-comm" class="btn btn-link new-comm" href="{% url 'comm_new'%}?account={{ account.id }}">New Communications</a>
 		</div>
 	</div>
 </div>
 {%endblock content%}
+Status API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Contact Help

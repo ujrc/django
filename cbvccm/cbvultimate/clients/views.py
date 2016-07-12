@@ -61,7 +61,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
 
 class ClientUpdateView(RestrictToOwnerMixin, UpdateView):
     model = Client
-    fields = ['description', 'address_one', 'address_two', 'city',
+    fields = ['name','description', 'address_one', 'address_two', 'city',
               'state', 'zip_code', 'country', 'phone']
     slug_field = 'uuid'
 

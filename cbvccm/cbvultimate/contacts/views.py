@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
+from .forms import ContactForm
 from .models import Contact
 from clients.models import Client
 
@@ -27,13 +28,32 @@ class ContactListView(RestrictToOwnerMixin, ListView):
 class ContactDetailView(RestrictToOwnerMixin, DetailView):
     model = Contact
     context_object_name = 'contacts'
+    # slug_field='client_id'
 
  
-class ContactCreateView(CreateView):
+class ContactCreateView(LoginRequiredMixin,CreateView):
+    # form_class=ContactForm
     model=Contact
-    slug_field='uuid'
+    template_name='contacts/contact_form.html'
     fields=['first_name','last_name','role','phone','email']
 
+    # def form_valid(self, form):
+    #     contact= form.save(commit=False)
+    #     client = Client.objects.filter(owner=self.request.user)
+    #     contact.client=self.client
+    #     return super(ContactCreateView, self).form_valid(form)
+
+    # # def form_valid(self, form):
+
+    # #     form.instance.client = client
+    # #     return super(ContactCreateView, self).form_valid(form)
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(ContactCreateView, self).get_form_kwargs(**kwargs)
+        if 'data' in kwargs:
+            client = Client.objects.get(pk=self.kwargs['client_id'])
+            instance = Contact(owner=self.request.user, client=client)
+            kwargs.update({'instance': instance})
+        return kwargs
 
 class ContactUpdateView(UpdateView):
     pass

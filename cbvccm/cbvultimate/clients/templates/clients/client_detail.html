@@ -18,7 +18,7 @@
 	{% include 'contacts/contact_detail.html'%}
 {% endfor%}
 	{# New Contact Link #}
-			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contacts:contact_new'%}?client={{ client.id }}">New Contact</a>
+			<a id="new-contact" class="btn btn-link new-contact" href="{% url 'contacts:contact_new'%}">New Contact</a>
 </div>
 <div class="col-xs-3">
 	<h1>Communications</h1>
