@@ -36,24 +36,17 @@ class ContactCreateView(LoginRequiredMixin,CreateView):
     model=Contact
     template_name='contacts/contact_form.html'
     fields=['first_name','last_name','role','phone','email']
+    success_url = '/'
 
-    # def form_valid(self, form):
-    #     contact= form.save(commit=False)
-    #     client = Client.objects.filter(owner=self.request.user)
-    #     contact.client=self.client
-    #     return super(ContactCreateView, self).form_valid(form)
+    def form_valid(self, form):
+        new_contact= form.save(commit=False)
+        new_contact.owner = self.request.user
+        this_client = Client.objects.get(pk=self.kwargs['client_id'])
+        new_contact.client = this_client
+        new_contact.save()
+        return super(ContactCreateView, self).form_valid(form)
 
-    # # def form_valid(self, form):
 
-    # #     form.instance.client = client
-    # #     return super(ContactCreateView, self).form_valid(form)
-    def get_form_kwargs(self, **kwargs):
-        kwargs = super(ContactCreateView, self).get_form_kwargs(**kwargs)
-        if 'data' in kwargs:
-            client = Client.objects.get(pk=self.kwargs['client_id'])
-            instance = Contact(owner=self.request.user, client=client)
-            kwargs.update({'instance': instance})
-        return kwargs
 
 class ContactUpdateView(UpdateView):
     pass

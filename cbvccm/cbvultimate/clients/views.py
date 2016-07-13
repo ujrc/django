@@ -45,8 +45,8 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'description', 'address_one', 'address_two', 'city',
               'state', 'zip_code', 'country', 'phone']
 
-    def get_context_data(self):
-        context = super(ClientCreateView, self).get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super(ClientCreateView, self).get_context_data(**kwargs)
         context.update({'input': 'Create Client', 'title': 'Add a New Client'})
         return context
 
