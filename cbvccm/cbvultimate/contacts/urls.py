@@ -1,4 +1,4 @@
-# contacts/urls.py
+
 from django.conf.urls import url
 
 from .views import (ContactCreateView, ContactDeleteView,
@@ -14,3 +14,4 @@ urlpatterns = [
     # url(r'^(?P<slug>[\-w]+)/$',contact_detail,name='contact_detail'),
     # url(r'^(?P<pk>[0-9]+)/$',ContactDetailView.as_view(),name='contact_detail'),
 ]
+

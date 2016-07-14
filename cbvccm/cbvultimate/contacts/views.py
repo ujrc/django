@@ -33,7 +33,6 @@ class ContactListView(GetObjectMixin, RestrictToOwnerMixin, ListView):
     model = Contact
     context_object_name = 'contacts'
 
-
 # class ContactDetailView(RestrictToOwnerMixin, DetailView):
 #     model = Contact
 #     context_object_name = 'contacts'
