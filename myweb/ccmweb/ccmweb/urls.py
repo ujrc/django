@@ -18,8 +18,6 @@ from django.conf.urls.static import static
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.contrib.auth import views as django_view
-from marketing.views import HomePage, AboutUsView
-from subscribers import views as subscribers_view
 
 from accounts.views import AccountList
 from accounts import views as accounts_view
@@ -30,11 +28,15 @@ from communications import views as comm_view
 from contacts.views import ContactDelete #ContactCreate,UpdateView
 from contacts import views as contacts_view
 from contacts.urls import contact_urls
+from marketing.views import HomePage, AboutUsView,ContactUsView
+from subscribers import views as subscribers_view
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',HomePage.as_view(),name='home'),
     url(r'^about/$',AboutUsView.as_view(),name='about'),
+    url(r'^contactus/$',ContactUsView.as_view(),name='contactus'),
     # Subscribers URL
     url(r'^signup/$',subscribers_view.subscriber_new,name='sub_new'),
     url(r'^login/$',django_view.login,{'template_name':'login.html'},name='login'),

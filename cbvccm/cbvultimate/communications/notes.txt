@@ -1,2 +1,15 @@
 display choice value: {{object.get_name_of_field_display}}
 eg {{object.get_gender_display}}
+
+
+
+class CustomerView(DetailView):
+  model = 'Customer'
+
+  def get_context_data(self, **kwargs):
+      context = super(CustomerView, self).get_context_data(**kwargs)
+      context['bookings'] = Booking.objects.all.filter(customer_id=request.kwargs['pk']
+      context['ratings'] = Ratings.objects.all.filter(customer_id=request.kwargs['pk']
+      context['calls'] = Customer_Service_Calls.objects.all.filter(customer_id=request.kwargs['pk'], status'Open')
+      context['fav_routes'] = Favourited_Route.objects.all.filter(customer_id=request.kwargs['pk'], status'Open')
+      return context

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Contact us {% endblock title %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1>Contact us!</h1>
+				</div>
+				<div class="panel-body">
+					<form role="form"  class="form-horizontal" action="" method="post">
+						{% csrf_token%}
+						{% include 'accounts/_fields.html'%}
+						<center	>
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary" value="Send Message">
+						</div>
+						<p> {{form.non_field_errors}} </p>
+						</center>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content%}

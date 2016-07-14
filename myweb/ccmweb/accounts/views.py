@@ -22,7 +22,7 @@ def account_detail(request,uuid):
 		return httpResponseForbidden()
 
 	contacts=Contact.objects.filter(account=account)
-	contact_form=ContactForm()
+	# contact_form=ContactForm()
 
 	communications=Communication.objects.filter(account=account).order_by('-Created_on')
 	
@@ -33,7 +33,7 @@ def account_detail(request,uuid):
 	'contacts': contacts,
 	'communications': communications,
 	'form':form,
-	'form':contact_form,
+	# 'form':contact_form,
 	}
 
 	return render(request,'accounts/account_detail.html',variables)

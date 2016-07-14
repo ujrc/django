@@ -21,13 +21,15 @@ class Contact(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        verbose_name_plural = 'contacts'
-        ordering = ['client', 'modified_on']
-
     @property
     def get_full_name(self):
         return '%s %s' % (self.first_name, self.last_name)
+
+    class Meta:
+        verbose_name_plural = 'contacts'
+        ordering = ['client', 'modified_on']
+        unique_together=['email','first_name','last_name']
+
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
