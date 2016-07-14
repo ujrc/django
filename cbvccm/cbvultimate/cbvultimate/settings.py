@@ -21,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'kmevaun0g06hju(_!m2ypd$a@cm_#kff1qfv9i0u3o+toei^l='
-main_path=os.path.join(BASE_DIR,'cbvultimate/secret.txt')
-keys=eval(open(main_path).read())
-SECRET_KEY=keys['SECRET_KEY']
-db_password=keys['db_password']
+main_path = os.path.join(BASE_DIR, 'cbvultimate/secret.txt')
+keys = eval(open(main_path).read())
+SECRET_KEY = keys['SECRET_KEY']
+db_password = keys['db_password']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,15 +32,15 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER=keys['email']
-EMAIL_HOST_PASSWORD=keys['password']
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = keys['email']
+EMAIL_HOST_PASSWORD = keys['password']
 EMAIL_PORT = 587
-LIST_OF_RECIPIENTS=[EMAIL_HOST_USER,'uwjearc@yahoo.com']
+LIST_OF_RECIPIENTS = [EMAIL_HOST_USER, 'uwjearc@yahoo.com']
 EMAIL_USE_TLS = True
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -54,12 +54,14 @@ INSTALLED_APPS = [
     # Third part apps
     'avatar',
     'django_countries',
+    'django_extensions',
 
     # my apps
     'main',
     'accounts',
     'clients',
     'contacts',
+    'communications',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -78,7 +80,7 @@ ROOT_URLCONF = 'cbvultimate.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,26 +100,25 @@ WSGI_APPLICATION = 'cbvultimate.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 
+"""
+DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+ }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cbvultimate_db',
-        'USER':'postgres',
-        'PASSWORD':db_password,
-        'HOST':'localhost',
-        'PORT':5432,
+        'USER': 'postgres',
+        'PASSWORD': db_password,
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -155,7 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS =[os.path.join(BASE_DIR,'static')]
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'static_cdn')
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR),'media_cdn')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_cdn')

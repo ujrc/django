@@ -12,20 +12,22 @@ class Client(models.Model):
     uuid = ShortUUIDField(unique=True)
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    url = models.URLField(blank=True)
     address_one = models.CharField(max_length=120)
     address_two = models.CharField(max_length=120, blank=True)
     city = models.CharField(max_length=60)
-    state = models.CharField(max_length=2)
+    state = models.CharField(max_length=30, blank=True)
     zip_code = models.IntegerField(blank=True, null=True)
     country = country = CountryField(
         blank=True, blank_label='(select country)')
-    phone = models.CharField(max_length=16)
+    phone = models.CharField(max_length=20, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'clients'
+        ordering = ['name', '-created_on']
 
     def __str__(self):
         return '%s' % self.name

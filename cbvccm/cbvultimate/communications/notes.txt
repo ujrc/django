@@ -1,0 +1,2 @@
+display choice value: {{object.get_name_of_field_display}}
+eg {{object.get_gender_display}}

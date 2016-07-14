@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-xs-8 col-xs-offset-2">
 		<div class="panel panel-default">
-			<div class="panel-heading"> <h1>Add</h1>
+			<div class="panel-heading"> <h1>{{title}}</h1>
 			</div>
 			<div class="panel-body">
 			<form id="contact-form" action="" method="post" class="form-horizontal">
@@ -15,7 +15,7 @@
 				<input id="id_client" name="client" type="hidden"	value="{% if request.GET.client %}
 				{{ request.GET.client }}{% else %}{{ client.id }}{% endif %}"/>
 				<input id="id_owner" name="owner" type="hidden" value="{{ user.username }}"/>
-				<input class="btn btn-primary" type="submit" name="create" value="Add">
+				<input class="btn btn-primary" type="submit" name="create" value="{{input}}">
 			</div>
 			<p>{{form.non_fields_errors}}</p>
 			</center

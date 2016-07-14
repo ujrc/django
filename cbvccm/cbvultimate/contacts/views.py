@@ -1,12 +1,12 @@
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from .forms import ContactForm
 from .models import Contact
 from clients.models import Client
 
@@ -19,45 +19,65 @@ class RestrictToOwnerMixin(LoginRequiredMixin):
         return qs
 
 
-class ContactListView(RestrictToOwnerMixin, ListView):
-    queryset = Contact.objects.all()
-    model=Contact
-    context_object_name='contacts'
+class GetObjectMixin(object):
+
+    def get_object(self, queryset=None):
+        obj = super(GetObjectMixin, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        client = Client.objects.get(pk=obj.client.id)
+        return obj
 
 
-class ContactDetailView(RestrictToOwnerMixin, DetailView):
+class ContactListView(GetObjectMixin, RestrictToOwnerMixin, ListView):
     model = Contact
     context_object_name = 'contacts'
-    # slug_field='client_id'
-
- 
-class ContactCreateView(LoginRequiredMixin,CreateView):
-    # form_class=ContactForm
-    model=Contact
-    template_name='contacts/contact_form.html'
-    fields=['first_name','last_name','role','phone','email']
-
-    # def form_valid(self, form):
-    #     contact= form.save(commit=False)
-    #     client = Client.objects.filter(owner=self.request.user)
-    #     contact.client=self.client
-    #     return super(ContactCreateView, self).form_valid(form)
-
-    # # def form_valid(self, form):
-
-    # #     form.instance.client = client
-    # #     return super(ContactCreateView, self).form_valid(form)
-    def get_form_kwargs(self, **kwargs):
-        kwargs = super(ContactCreateView, self).get_form_kwargs(**kwargs)
-        if 'data' in kwargs:
-            client = Client.objects.get(pk=self.kwargs['client_id'])
-            instance = Contact(owner=self.request.user, client=client)
-            kwargs.update({'instance': instance})
-        return kwargs
-
-class ContactUpdateView(UpdateView):
-    pass
 
 
-class ContactDeleteView(DeleteView):
-    pass
+# class ContactDetailView(RestrictToOwnerMixin, DetailView):
+#     model = Contact
+#     context_object_name = 'contacts'
+
+
+class ContactCreateView(LoginRequiredMixin, CreateView):
+    model = Contact
+    fields = ['first_name', 'last_name', 'role', 'phone', 'email']
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactCreateView, self).get_context_data(**kwargs)
+        context.update({'input': 'Create Contact',
+                        'title': 'Add a New Contact'})
+        return context
+
+    def form_valid(self, form):
+        new_contact = form.save(commit=False)
+        new_contact.owner = self.request.user
+        _client = Client.objects.get(pk=self.kwargs['client_id'])
+        new_contact.client = _client
+        new_contact.save()
+        return super(ContactCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('clients:client_list')
+
+
+class ContactUpdateView(GetObjectMixin, RestrictToOwnerMixin, UpdateView):
+    model = Contact
+    fields = ['first_name', 'last_name', 'role', 'phone', 'email']
+    slug_field = 'uuid'
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactUpdateView, self).get_context_data(**kwargs)
+        context.update({'input': 'Update Contact', 'title': 'Update Contact'})
+        return context
+
+    def get_success_url(self):
+        return reverse('contacts:contact_list')
+
+
+class ContactDeleteView(GetObjectMixin, RestrictToOwnerMixin, DeleteView):
+    model = Contact
+    template_name = 'object_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('clients:client_list')

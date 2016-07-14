@@ -29,7 +29,8 @@ class ClientListView(RestrictToOwnerMixin, ListView):
         except KeyError:
             clien = None
         if clien:
-            clients_list = self.model.objects.filter(name__icontains=clien,owner=self.request.user)
+            clients_list = self.model.objects.filter(
+                name__icontains=clien, owner=self.request.user)
         else:
             clients_list = self.model.objects.filter(owner=self.request.user)
         return clients_list
@@ -45,8 +46,8 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'description', 'address_one', 'address_two', 'city',
               'state', 'zip_code', 'country', 'phone']
 
-    def get_context_data(self):
-        context = super(ClientCreateView, self).get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super(ClientCreateView, self).get_context_data(**kwargs)
         context.update({'input': 'Create Client', 'title': 'Add a New Client'})
         return context
 
@@ -61,12 +62,12 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
 
 class ClientUpdateView(RestrictToOwnerMixin, UpdateView):
     model = Client
-    fields = ['name','description', 'address_one', 'address_two', 'city',
+    fields = ['name', 'description', 'address_one', 'address_two', 'city',
               'state', 'zip_code', 'country', 'phone']
     slug_field = 'uuid'
 
-    def get_context_data(self):
-        context = super(ClientUpdateView, self).get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super(ClientUpdateView, self).get_context_data(**kwargs)
         context.update({'input': 'Update Client', 'title': 'Update Client'})
         return context
 

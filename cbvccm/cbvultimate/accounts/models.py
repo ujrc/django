@@ -34,8 +34,10 @@ class UserProfile(TimestampModel):
     @property
     def age(self):
         today = date.today()
-        delta = (today.year - self.birthday.year) - (int(today.month, today.day) <
-                                                     (self.birthday.month, self.birthday.day))
+        if not self.birthday:
+            self.birthday = today
+        delta = (today.year - self.birthday.year) - ((today.month,
+                                                      today.day) < (self.birthday.month, self.birthday.day))
         return delta
 
     def __str__(self):

@@ -1,0 +1,7 @@
+<p class="ci-td-p-l"><label for="id_subject">Subject:</label>&nbsp;{{communication.subject}} </p>
+<p> <label for="id_notes">Notes:</label>&nbsp; {{communication.notes}} </p>
+<p> <label for="id_kind">Type:</label>&nbsp;{{communication.get_kind_display}}</p>
+<p><label for="id_date">Date:</label>&nbsp; {{communication.date}} </p>
+
+<a class="cancel  btn btn-primary" href="{% url 'communications:comm_edit' communication.client.id%}?client={{communication.client.id}}{{communication.client.uuid_com}}">Edit</a>
+ <a class="cancel  btn btn-danger" href="{{ communication.get_delete_url }}?client={{communication.client.id}}{{contact.client.uuid_com}}">Delete</a>

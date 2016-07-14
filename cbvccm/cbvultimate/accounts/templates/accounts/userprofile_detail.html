@@ -13,8 +13,10 @@
 				<label for="birthday">Birth Date:</label> {{user.userprofile.birthday}} <br>
 				<label for="biography">Bio:</label>
 				{{ user.userprofile.biography }} <br>
+				{% if user.userprofile.birthday%}
 				<label for="age">Age:</label> {{user.userprofile.age}} <br>
-				<label for="gender">Gender:</label> {{user.userprofile.gender}} <br>
+				{% endif%}
+				<label for="gender">Gender:</label> {{user.userprofile.get_gender_display}} <br>
 		{% endif %}
 		</div>
 		{% avatar user 65 class="img-circle img-responsive" id="user_avatar" %}
